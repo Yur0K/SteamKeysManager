@@ -8,24 +8,21 @@
 #include <vcl\Clipbrd.hpp>
 #include "Steam_Keys_DB.h"
 #pragma hdrstop
-
-
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 int count_record;
 AnsiString TextSQL, TextDelete, TextSelect, TextUpdate, Key_cache, TextSQLList;
 AnsiString URL, BOT, Path;
-//---------------------------------------------------------------------------
+
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TForm(Owner)
 {
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
+    MainForm->Caption="Steam Keys Database 2018.02.05";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -58,18 +55,20 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 	TSearchRec Rec;
 	Path = ExtractFileDir(Application->ExeName);
 
-	//switch (Device->ItemIndex) {
-	//case 0:
-	//Path = Path + "\\PC\\";
-	//break;
+	// Filling up a list of devices
+	switch (Device->ItemIndex)
+	{
+		case 0:
+		Path = Path + "\\PC\\";
+		break;
 
-	//case 1:
-	//Path = Path + "\\Notebook\\";
-	//break;
+		case 1:
+		Path = Path + "\\Notebook\\";
+		break;
 
-	//default:
-	//	;
-	//}
+		default:
+			;
+	}
 
 	// Filling up browsers list
 	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
@@ -100,7 +99,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 		MainForm->Width=663;
 		GaOpener->TabVisible=false;
 	}
-	// Selecting all keys and filling up lists if DB is not empty 
+	// Selecting all keys and filling up lists if DB is not empty
 	else
 	{
 		KeySelect->Visible=true;
@@ -197,7 +196,6 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 	Key_cache=Key_link->Text.Trim();
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 {
@@ -287,12 +285,11 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 	Key_cache=Key_link->Text.Trim();
 	if (Game_name->Text.IsEmpty())
 	{
-        	Add_date->DateTime.CurrentDateTime();
+		Add_date->DateTime.CurrentDateTime();
 		Key_link->Text="Click on a key or link";
 		Game_name->Text="Click on a key or link";
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 {
@@ -352,11 +349,10 @@ void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 	{
 		Already_used->Checked=false;
 	}
-	
+
 	Delete_key->Enabled=false;
 	Key_cache=Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 {
@@ -403,7 +399,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 				Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
 				Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
 				Number_keys->Text=ADOQuerySelect->RecordCount;
-				
+
 				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
 				{
 					Trading_cards->Checked=true;
@@ -473,7 +469,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 					Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
 					ADOQueryListBox->FindNext();
 				}
-				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+				// Set selected item in games list corresponding to game name field
 				int index = GamesListBox->Items->IndexOf(Game_name->Text);
 				if (index >= 0)
 				{
@@ -482,7 +478,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 			}
 			else
 			{
-				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+				// Set selected item in games list corresponding to game name field
 				int index = GamesListBox->Items->IndexOf(Game_name->Text);
 				if (index >= 0)
 				{
@@ -604,7 +600,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 		ADOQuerySelect->Parameters->Items[2]->Value=Game_name->Text.Trim();
 		ADOQuerySelect->Parameters->Items[3]->Value=Source->Text.Trim();
 		ADOQuerySelect->Parameters->Items[8]->Value=Notes->Text.Trim();
-		
+
 		if(Trading_cards->Checked==true)
 		{
 			ADOQuerySelect->Parameters->Items[4]->Value=1;
@@ -613,7 +609,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 		{
 			ADOQuerySelect->Parameters->Items[4]->Value=0;
 		}
-	
+
 		if(DLC->Checked==true)
 		{
 			ADOQuerySelect->Parameters->Items[5]->Value=1;
@@ -622,7 +618,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 		{
 			ADOQuerySelect->Parameters->Items[5]->Value=0;
 		}
-		
+
 		if(Other->Checked==true)
 		{
 			ADOQuerySelect->Parameters->Items[6]->Value=1;
@@ -631,7 +627,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 		{
 			ADOQuerySelect->Parameters->Items[6]->Value=0;
 		}
-		
+
 		if(Already_used->Checked==true)
 		{
 			ADOQuerySelect->Parameters->Items[7]->Value=1;
@@ -678,7 +674,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 				ADOQueryListBox->FindNext();
 			}
 
-			//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+			// Set selected item in games list corresponding to game name field
 			int index = GamesListBox->Items->IndexOf(Game_name->Text);
 			if (index >= 0)
 			{
@@ -693,7 +689,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 			MainForm->Width=1123;
 			GaOpener->TabVisible=true;
 		}
-		
+
 		catch(...)
 		{
 		Add_Key_Button->Caption="ERROR";
@@ -711,7 +707,6 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 	Number_keys->Text=ADOQueryDBGrid->RecordCount;
 	Key_cache=Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TimerTimer(TObject *Sender)
 {
@@ -837,7 +832,7 @@ void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 					ADOQueryListBox->FindNext();
 				}
 
-				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+				// Set selected item in games list corresponding to game name field
 			   	int index = GamesListBox->Items->IndexOf(Game_name->Text);
 			   	if (index >= 0)
 			   	{
@@ -853,7 +848,6 @@ void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 	}
 	Key_cache=Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 {
@@ -916,7 +910,7 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
 		ADOQueryListBox->FindNext();
 	}
-	//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+	// Set selected item in games list corresponding to game name field
 	int index = GamesListBox->Items->IndexOf(Game_name->Text);
 	if (index >= 0)
 	{
@@ -927,7 +921,6 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 	Delete_key->Enabled=false;
 	Key_cache=Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 {
@@ -956,7 +949,6 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 	}
 	Delete_key->Enabled=false;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 {
@@ -973,7 +965,6 @@ void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 		Clipboard()->AsText = Key_buffer->Text.Trim();
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 {
@@ -982,7 +973,6 @@ void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 		Add_Key_ButtonClick(Sender);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 {
@@ -991,7 +981,6 @@ void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 		Add_Key_ButtonClick(Sender);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 {
@@ -1005,7 +994,7 @@ void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 		Key_link->SetFocus();
 	}
 }
-//---------------------------------------------------------------------------
+
 void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 {
 	switch (SortGroup->ItemIndex)
@@ -1097,7 +1086,7 @@ void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
 		ADOQueryListBox->FindNext();
 	}
-	//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+	// Set selected item in games list corresponding to game name field
 	int index = GamesListBox->Items->IndexOf(Game_name->Text);
 	if (index >= 0)
 	{
@@ -1121,13 +1110,11 @@ void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 	}
 
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Add_groupClick(TObject *Sender)
 {
 	Groups_list->Items->Add(Clipboard()->AsText);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
 {
@@ -1144,13 +1131,11 @@ void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Add_linkClick(TObject *Sender)
 {
 	Links_list->Items->Add(Clipboard()->AsText);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 {
@@ -1166,7 +1151,6 @@ void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 {
@@ -1178,7 +1162,6 @@ void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 	}
 
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::DeviceClick(TObject *Sender)
 {
@@ -1210,56 +1193,46 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 	}
 	FindClose(Rec);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_groupClick(TObject *Sender)
 {
 	Groups_list->Items->Delete(Groups_list->ItemIndex);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_linkClick(TObject *Sender)
 {
 	Links_list->Items->Delete(Links_list->ItemIndex);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
 {
 	Key_link->Text=Clipboard()->AsText;
 	Add_Key_ButtonClick(Sender);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_StayOnTopClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsStayOnTop;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_NormalClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsNormal;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TrayIconClick(TObject *Sender)
 {
 	TrayIcon->Visible=false;
 	ShowWindow(MainForm->Handle, SW_SHOW);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormHide(TObject *Sender)
 {
 	TrayIcon->Visible=true;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
-//---------------------------------------------------------------------------
-
