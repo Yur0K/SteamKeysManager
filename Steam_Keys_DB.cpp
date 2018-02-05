@@ -715,20 +715,20 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 
 void __fastcall TMainForm::TimerTimer(TObject *Sender)
 {
-Add_Key_Button->Caption="Add key";
-Copy_buffer->Caption="Copy";
-Add_new_game->Color=clWhite;
-KeySelect->Color=clWhite;
-SortingBox->Color=clWhite;
-Key_link->Color=clWindow;
-Delete_key->Caption="Delete key";
-Update_key->Caption="Update info";
+	Add_Key_Button->Caption="Add key";
+	Copy_buffer->Caption="Copy";
+	Add_new_game->Color=clWhite;
+	KeySelect->Color=clWhite;
+	SortingBox->Color=clWhite;
+	Key_link->Color=clWindow;
+	Delete_key->Caption="Delete key";
+	Update_key->Caption="Update info";
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 {
-Delete_key->Enabled=false;
+	Delete_key->Enabled=false;
 
 	if(Key_link->Text.IsEmpty()||Game_name->Text.IsEmpty()||Source->Text.IsEmpty())
 	{
@@ -736,85 +736,86 @@ Delete_key->Enabled=false;
 		Add_new_game->Color=clYellow;
 		Timer->Enabled=true;
 	}
-		else{
-			TextUpdate="UPDATE Keys SET Add_date='";
-			TextUpdate+=Add_date->DateTime.DateTimeString();
-			TextUpdate+="', Key_link='";
-			TextUpdate+=Key_link->Text.Trim();
-			TextUpdate+="', Game_name='";
-			TextUpdate+=Game_name->Text.Trim();
-			TextUpdate+="', Source='";
-			TextUpdate+=Source->Text.Trim();
-			TextUpdate+="', Notes='";
-			TextUpdate+=Notes->Text.Trim();
-			TextUpdate+="', Trading_cards='";
-				if(Trading_cards->Checked==true)
-				{
-				TextUpdate+=1;
-				}
-					else
-					{
-					TextUpdate+=0;
-					}
-			TextUpdate+="', DLC='";
-				if(DLC->Checked==true)
-				{
-				TextUpdate+=1;
-				}
-					else
-					{
-					TextUpdate+=0;
-					}
-			TextUpdate+="', Other='";
-				if(Other->Checked==true)
-				{
-				TextUpdate+=1;
-				}
-					else
-					{
-					TextUpdate+=0;
-					}
-			TextUpdate+="', Already_used='";
-				if(Already_used->Checked==true)
-				{
-				TextUpdate+=1;
-				}
-					else
-					{
-					TextUpdate+=0;
-					}
-			TextUpdate+="'";
-			TextUpdate+=" WHERE Key_link='";
-			TextUpdate+=Key_cache;
-			TextUpdate+=" ' ";
-	try
+	else
+	{
+		TextUpdate="UPDATE Keys SET Add_date='";
+		TextUpdate+=Add_date->DateTime.DateTimeString();
+		TextUpdate+="', Key_link='";
+		TextUpdate+=Key_link->Text.Trim();
+		TextUpdate+="', Game_name='";
+		TextUpdate+=Game_name->Text.Trim();
+		TextUpdate+="', Source='";
+		TextUpdate+=Source->Text.Trim();
+		TextUpdate+="', Notes='";
+		TextUpdate+=Notes->Text.Trim();
+		TextUpdate+="', Trading_cards='";
+		if(Trading_cards->Checked==true)
 		{
-			ADOQueryUpdate->Active=false;
-			ADOQueryUpdate->SQL->Clear();
-			ADOQueryUpdate->SQL->Add(TextUpdate);
-			ADOQueryUpdate->ExecSQL();
+			TextUpdate+=1;
+		}
+		else
+		{
+			TextUpdate+=0;
+		}
+		TextUpdate+="', DLC='";
+		if(DLC->Checked==true)
+		{
+			TextUpdate+=1;
+		}
+		else
+		{
+			TextUpdate+=0;
+		}
+		TextUpdate+="', Other='";
+		if(Other->Checked==true)
+		{
+			TextUpdate+=1;
+		}
+		else
+		{
+			TextUpdate+=0;
+		}
+		TextUpdate+="', Already_used='";
+		if(Already_used->Checked==true)
+		{
+			TextUpdate+=1;
+		}
+		else
+		{
+			TextUpdate+=0;
+		}
+		TextUpdate+="'";
+		TextUpdate+=" WHERE Key_link='";
+		TextUpdate+=Key_cache;
+		TextUpdate+=" ' ";
+			try
+			{
+				ADOQueryUpdate->Active=false;
+				ADOQueryUpdate->SQL->Clear();
+				ADOQueryUpdate->SQL->Add(TextUpdate);
+				ADOQueryUpdate->ExecSQL();
 
-			Update_key->Caption="INFO UPDATED";
-			Add_new_game->Color=clLime;
-			Timer->Enabled=true;
+				Update_key->Caption="INFO UPDATED";
+				Add_new_game->Color=clLime;
+				Timer->Enabled=true;
 
-			GamesListBox->Items->Clear();
-			Source->Items->Clear();
-			Game_name->Items->Clear();
+				GamesListBox->Items->Clear();
+				Source->Items->Clear();
+				Game_name->Items->Clear();
 
-			TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-			TextSQL+=Game_name->Text;
-			TextSQL+="' ORDER BY Add_date ASC";
-			ADOQueryDBGrid->SQL->Clear();
-			ADOQueryDBGrid->SQL->Add(TextSQL);
-			ADOQueryDBGrid->Active=true;
-			Number_keys->Text=ADOQueryDBGrid->RecordCount;
+				TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+				TextSQL+=Game_name->Text;
+				TextSQL+="' ORDER BY Add_date ASC";
+				ADOQueryDBGrid->SQL->Clear();
+				ADOQueryDBGrid->SQL->Add(TextSQL);
+				ADOQueryDBGrid->Active=true;
+				Number_keys->Text=ADOQueryDBGrid->RecordCount;
 
-			TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			Source->Items->Clear();
+				TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+				ADOQueryListBox->SQL->Clear();
+				ADOQueryListBox->SQL->Add(TextSQL);
+				ADOQueryListBox->Active=true;
+				Source->Items->Clear();
 
 				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
 				{
@@ -822,12 +823,12 @@ Delete_key->Enabled=false;
 					ADOQueryListBox->FindNext();
 				}
 
-			TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			GamesListBox->Items->Clear();
-			Game_name->Items->Clear();
+				TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+				ADOQueryListBox->SQL->Clear();
+				ADOQueryListBox->SQL->Add(TextSQL);
+				ADOQueryListBox->Active=true;
+				GamesListBox->Items->Clear();
+				Game_name->Items->Clear();
 
 				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
 				{
@@ -837,22 +838,20 @@ Delete_key->Enabled=false;
 				}
 
 				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-			   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-			   if (index >= 0)
-			   {
-				 //âûäåëÿåì ñòðîêó
-				 GamesListBox->ItemIndex = index;
-			   }
-		}
-
-	catch (...)
+			   	int index = GamesListBox->Items->IndexOf(Game_name->Text);
+			   	if (index >= 0)
+			   	{
+					GamesListBox->ItemIndex = index;
+			   	}
+			}
+		catch (...)
 		{
 			Update_key->Caption="ERROR";
 			Add_new_game->Color=clRed;
 			Timer->Enabled=true;
 		}
 	}
-Key_cache=Key_link->Text.Trim();
+	Key_cache=Key_link->Text.Trim();
 }
 //---------------------------------------------------------------------------
 
@@ -902,9 +901,9 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 			;
 	}
 
-ADOQueryDBGrid->SQL->Clear();
-ADOQueryDBGrid->SQL->Add(TextSQL);
-ADOQueryDBGrid->Active=true;
+	ADOQueryDBGrid->SQL->Clear();
+	ADOQueryDBGrid->SQL->Add(TextSQL);
+	ADOQueryDBGrid->Active=true;
 
 	ADOQueryListBox->SQL->Clear();
 	ADOQueryListBox->SQL->Add(TextSQLList);
@@ -912,22 +911,21 @@ ADOQueryDBGrid->Active=true;
 
 	GamesListBox->Items->Clear();
 
-		for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-		{
-			GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-			ADOQueryListBox->FindNext();
-		}
-			//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-				   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-				   if (index >= 0)
-				   {
-					 //âûäåëÿåì ñòðîêó
-					 GamesListBox->ItemIndex = index;
-				   }
+	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+	{
+		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+		ADOQueryListBox->FindNext();
+	}
+	//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+	int index = GamesListBox->Items->IndexOf(Game_name->Text);
+	if (index >= 0)
+	{
+		GamesListBox->ItemIndex = index;
+	}
 
-Number_keys->Text=ADOQueryDBGrid->RecordCount;
-Delete_key->Enabled=false;
-Key_cache=Key_link->Text.Trim();
+	Number_keys->Text=ADOQueryDBGrid->RecordCount;
+	Delete_key->Enabled=false;
+	Key_cache=Key_link->Text.Trim();
 }
 //---------------------------------------------------------------------------
 
@@ -956,17 +954,17 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 		Only_keys->Checked=false;
 		Multiselection->Top=23;
 	}
-Delete_key->Enabled=false;
+	Delete_key->Enabled=false;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 {
-if (Key_buffer->Text.IsEmpty())
-{
-	Copy_buffer->Caption="Empty";
-	Timer->Enabled=true;
-}
+	if (Key_buffer->Text.IsEmpty())
+	{
+		Copy_buffer->Caption="Empty";
+		Timer->Enabled=true;
+	}
 	else
 	{
 		SortingBox->Color=clLime;
@@ -979,33 +977,33 @@ if (Key_buffer->Text.IsEmpty())
 
 void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 {
-if(Key==13)
-{
-   Add_Key_ButtonClick(Sender);
-}
+	if(Key==13)
+	{
+		Add_Key_ButtonClick(Sender);
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 {
-if(Key==13)
-{
-   Add_Key_ButtonClick(Sender);
-}
+	if(Key==13)
+	{
+		Add_Key_ButtonClick(Sender);
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 {
-if (Key_link->Text.IsEmpty())
-{
-Key_link->Text=Clipboard()->AsText;
-}
-else
-{
-Key_link->SelectAll();
-Key_link->SetFocus();
-}
+	if (Key_link->Text.IsEmpty())
+	{
+		Key_link->Text=Clipboard()->AsText;
+	}
+	else
+	{
+		Key_link->SelectAll();
+		Key_link->SetFocus();
+	}
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::SortGroupClick(TObject *Sender)
@@ -1040,34 +1038,49 @@ void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 			;
 	}
 
-		ADOQuerySelect->SQL->Clear();
-		ADOQuerySelect->SQL->Add(TextSelect);
-		ADOQuerySelect->Active=true;
-		ADOQuerySelect->FindFirst();
-		Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
-		Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-		Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-		Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-		Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-			if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True"){
-			Trading_cards->Checked=true; }
-			else{
-			Trading_cards->Checked=false; }
+	ADOQuerySelect->SQL->Clear();
+	ADOQuerySelect->SQL->Add(TextSelect);
+	ADOQuerySelect->Active=true;
+	ADOQuerySelect->FindFirst();
+	Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+	Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
+	Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
+	Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
+	Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+	if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+	{
+		Trading_cards->Checked=true;
+	}
+	else
+	{
+		Trading_cards->Checked=false;
+	}
 
-			if(ADOQuerySelect->FieldByName("DLC")->AsString=="True"){
-			DLC->Checked=true; }
-			else{
-			DLC->Checked=false; }
+	if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+	{
+		DLC->Checked=true; }
+	else
+	{
+		DLC->Checked=false;
+	}
 
-			if(ADOQuerySelect->FieldByName("Other")->AsString=="True") {
-			Other->Checked=true;}
-			else {
-			Other->Checked=false; }
+	if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+	{
+		Other->Checked=true;
+	}
+	else
+	{
+		Other->Checked=false;
+	}
 
-			if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")	{
-			Already_used->Checked=true; }
-			else{
-			Already_used->Checked=false; }
+	if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+	{
+		Already_used->Checked=true;
+	}
+	else
+	{
+		Already_used->Checked=false;
+	}
 
 	ADOQueryDBGrid->SQL->Clear();
 	ADOQueryDBGrid->SQL->Add(TextSQL);
@@ -1079,44 +1092,32 @@ void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 
 	GamesListBox->Items->Clear();
 
-		for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-		{
-			GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-			ADOQueryListBox->FindNext();
-		}
-			//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-				   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-				   if (index >= 0)
-				   {
-					 //âûäåëÿåì ñòðîêó
-					 GamesListBox->ItemIndex = index;
-				   }
+	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+	{
+		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+		ADOQueryListBox->FindNext();
+	}
+	//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+	int index = GamesListBox->Items->IndexOf(Game_name->Text);
+	if (index >= 0)
+	{
+		GamesListBox->ItemIndex = index;
+	}
 
 Number_keys->Text=ADOQueryDBGrid->RecordCount;
 Delete_key->Enabled=false;
 Key_cache=Key_link->Text.Trim();
 }
 
-
 //--------------- GA OPENER ------------------------------
 
 void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 {
-if (Links_list->ItemIndex!=-1)
+	if (Links_list->ItemIndex!=-1)
 	{
-URL=Links_list->Items->Strings[Links_list->ItemIndex];
-BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
-
-//int index = Links_list->Items->IndexOf(Game_name->Text);
-//				   if (index >= 0)
-//				   {
-//					 //âûäåëÿåì ñòðîêó
-//					 Links_list->ItemIndex = index;
-//				   }
-
-//ShellExecute(0, NULL, "cmd.exe", String("/C adrien.lnk").t_str(), NULL, SW_SHOW);
-//ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOWNORMAL);
-ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+		URL=Links_list->Items->Strings[Links_list->ItemIndex];
+		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
+		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 
 }
@@ -1124,19 +1125,20 @@ ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 
 void __fastcall TMainForm::Add_groupClick(TObject *Sender)
 {
-Groups_list->Items->Add(Clipboard()->AsText);
+	Groups_list->Items->Add(Clipboard()->AsText);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
 {
-if (Groups_list->ItemIndex!=-1)
+	if (Groups_list->ItemIndex!=-1)
 	{
 		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
 
-		for (Groups_list->ItemIndex = 0; Groups_list->ItemIndex < Groups_list->Items->Count-1; Groups_list->ItemIndex++) {
-		URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+		for (Groups_list->ItemIndex = 0; Groups_list->ItemIndex < Groups_list->Items->Count-1; Groups_list->ItemIndex++)
+		{
+			URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
+			ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 		}
 		URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
@@ -1146,19 +1148,19 @@ if (Groups_list->ItemIndex!=-1)
 
 void __fastcall TMainForm::Add_linkClick(TObject *Sender)
 {
-Links_list->Items->Add(Clipboard()->AsText);
+	Links_list->Items->Add(Clipboard()->AsText);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 {
-if (Links_list->ItemIndex!=-1)
+	if (Links_list->ItemIndex!=-1)
 	{
 		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
-
-		for (Links_list->ItemIndex = 0; Links_list->ItemIndex < Links_list->Items->Count-1; Links_list->ItemIndex++) {
-		URL=Links_list->Items->Strings[Links_list->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+		for (Links_list->ItemIndex = 0; Links_list->ItemIndex < Links_list->Items->Count-1; Links_list->ItemIndex++)
+		{
+			URL=Links_list->Items->Strings[Links_list->ItemIndex];
+			ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 		}
 		URL=Links_list->Items->Strings[Links_list->ItemIndex];
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
@@ -1168,7 +1170,7 @@ if (Links_list->ItemIndex!=-1)
 
 void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 {
-if (Groups_list->ItemIndex!=-1)
+	if (Groups_list->ItemIndex!=-1)
 	{
 		URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
 		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
@@ -1180,83 +1182,84 @@ if (Groups_list->ItemIndex!=-1)
 
 void __fastcall TMainForm::DeviceClick(TObject *Sender)
 {
-Browser->Items->Clear();
-TSearchRec Rec;
-Path = ExtractFileDir(Application->ExeName);
+	Browser->Items->Clear();
+	TSearchRec Rec;
+	Path = ExtractFileDir(Application->ExeName);
 
-switch (Device->ItemIndex) {
-case 0:
-Path = Path + "\\PC\\";
-break;
+	switch (Device->ItemIndex)
+	{
+		case 0:
+		Path = Path + "\\PC\\";
+		break;
 
-case 1:
-Path = Path + "\\Notebook\\";
-break;
+		case 1:
+		Path = Path + "\\Notebook\\";
+		break;
 
-default:
-	;
-}
+		default:
+		;
+	}
 
-if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
-{
-do
-{
-Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-}
-while(FindNext(Rec) == 0);
-}
-FindClose(Rec);
+	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
+	{
+		do
+		{
+			Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
+		}
+		while(FindNext(Rec) == 0);
+	}
+	FindClose(Rec);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_groupClick(TObject *Sender)
 {
-Groups_list->Items->Delete(Groups_list->ItemIndex);
+	Groups_list->Items->Delete(Groups_list->ItemIndex);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_linkClick(TObject *Sender)
 {
-Links_list->Items->Delete(Links_list->ItemIndex);
+	Links_list->Items->Delete(Links_list->ItemIndex);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
 {
-Key_link->Text=Clipboard()->AsText;
-Add_Key_ButtonClick(Sender);
+	Key_link->Text=Clipboard()->AsText;
+	Add_Key_ButtonClick(Sender);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_StayOnTopClick(TObject *Sender)
 {
-MainForm->FormStyle=fsStayOnTop;
+	MainForm->FormStyle=fsStayOnTop;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_NormalClick(TObject *Sender)
 {
-MainForm->FormStyle=fsNormal;
+	MainForm->FormStyle=fsNormal;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TrayIconClick(TObject *Sender)
 {
-TrayIcon->Visible=false;
-ShowWindow(MainForm->Handle, SW_SHOW);
+	TrayIcon->Visible=false;
+	ShowWindow(MainForm->Handle, SW_SHOW);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormHide(TObject *Sender)
 {
-TrayIcon->Visible=true;
+	TrayIcon->Visible=true;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
-TrayIcon->Visible = true;
-ShowWindow(MainForm->Handle, SW_HIDE);
+	TrayIcon->Visible = true;
+	ShowWindow(MainForm->Handle, SW_HIDE);
 }
 //---------------------------------------------------------------------------
 
