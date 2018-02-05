@@ -23,6 +23,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 {
 }
 //---------------------------------------------------------------------------
+
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
 	// Defining ConnectionString to SteamDB.mdb database
@@ -293,75 +294,91 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 }
 //---------------------------------------------------------------------------
 
-
 void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 {
-TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-TextSQL+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-TextSQL+="' ORDER BY Add_date";
-ADOQueryDBGrid->SQL->Clear();
-ADOQueryDBGrid->SQL->Add(TextSQL);
-ADOQueryDBGrid->Active=true;
-Number_keys->Text=ADOQueryDBGrid->RecordCount;
+	TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+	TextSQL+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+	TextSQL+="' ORDER BY Add_date";
+	ADOQueryDBGrid->SQL->Clear();
+	ADOQueryDBGrid->SQL->Add(TextSQL);
+	ADOQueryDBGrid->Active=true;
+	Number_keys->Text=ADOQueryDBGrid->RecordCount;
 
-TextSelect="SELECT * FROM Keys WHERE Game_name='";
-TextSelect+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-TextSelect+=" ' ORDER BY Add_date";
-ADOQuerySelect->SQL->Clear();
-ADOQuerySelect->SQL->Add(TextSelect);
-ADOQuerySelect->Active=true;
-ADOQuerySelect->FindFirst();
-Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
-Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+	TextSelect="SELECT * FROM Keys WHERE Game_name='";
+	TextSelect+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+	TextSelect+=" ' ORDER BY Add_date";
+	ADOQuerySelect->SQL->Clear();
+	ADOQuerySelect->SQL->Add(TextSelect);
+	ADOQuerySelect->Active=true;
+	ADOQuerySelect->FindFirst();
+	Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+	Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
+	Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
+	Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
+	Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
 
-	if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True"){
-	Trading_cards->Checked=true; }
-	else{
-	Trading_cards->Checked=false; }
+	if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+	{
+		Trading_cards->Checked=true;
+	}
+	else
+	{
+		Trading_cards->Checked=false;
+	}
 
-	if(ADOQuerySelect->FieldByName("DLC")->AsString=="True"){
-	DLC->Checked=true; }
-	else{
-	DLC->Checked=false; }
+	if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+	{
+		DLC->Checked=true;
+	}
+	else
+	{
+		DLC->Checked=false;
+	}
 
-	if(ADOQuerySelect->FieldByName("Other")->AsString=="True") {
-	Other->Checked=true;}
-	else {
-	Other->Checked=false; }
+	if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+	{
+		Other->Checked=true;
+	}
+	else
+	{
+		Other->Checked=false;
+	}
 
-	if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")	{
-	Already_used->Checked=true; }
-	else{
-	Already_used->Checked=false; }
-
-Delete_key->Enabled=false;
-Key_cache=Key_link->Text.Trim();
+	if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+	{
+		Already_used->Checked=true;
+	}
+	else
+	{
+		Already_used->Checked=false;
+	}
+	
+	Delete_key->Enabled=false;
+	Key_cache=Key_link->Text.Trim();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 {
-try{
-TextDelete="DELETE FROM Keys WHERE Key_link = '";
-TextDelete+=DBGridKeys_list->SelectedField->AsString;
-TextDelete+="'";
-ADOQueryDelete->Active=false;
-ADOQueryDelete->SQL->Clear();
-ADOQueryDelete->SQL->Add(TextDelete);
-ADOQueryDelete->ExecSQL();
+	try
+	{
+		TextDelete="DELETE FROM Keys WHERE Key_link = '";
+		TextDelete+=DBGridKeys_list->SelectedField->AsString;
+		TextDelete+="'";
+		ADOQueryDelete->Active=false;
+		ADOQueryDelete->SQL->Clear();
+		ADOQueryDelete->SQL->Add(TextDelete);
+		ADOQueryDelete->ExecSQL();
 
-Timer->Enabled=true;
-KeySelect->Color=clLime;
-Delete_key->Caption="KEY DELETED";
-Delete_key->Enabled=false;
+		Timer->Enabled=true;
+		KeySelect->Color=clLime;
+		Delete_key->Caption="KEY DELETED";
+		Delete_key->Enabled=false;
 
-TextSQL="SELECT * FROM Keys";
-ADOQuerySelect->SQL->Clear();
-ADOQuerySelect->SQL->Add(TextSQL);
-ADOQuerySelect->Active=true;
+		TextSQL="SELECT * FROM Keys";
+		ADOQuerySelect->SQL->Clear();
+		ADOQuerySelect->SQL->Add(TextSQL);
+		ADOQuerySelect->Active=true;
 
 		if (ADOQuerySelect->RecordCount!=0)
 		{
@@ -374,51 +391,68 @@ ADOQuerySelect->Active=true;
 			Number_keys->Text=ADOQueryDBGrid->RecordCount;
 			if (Number_keys->Text=="0")
 			{
-			ADOQueryDBGrid->Active=false;
-			TextSQL="SELECT * FROM Keys";
-			ADOQuerySelect->SQL->Clear();
-			ADOQuerySelect->SQL->Add(TextSQL);
-			ADOQuerySelect->Active=true;
-			ADOQuerySelect->FindLast();
-			Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsString;
-			Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-			Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-			Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-			Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-			Number_keys->Text=ADOQuerySelect->RecordCount;
-				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True"){
-				Trading_cards->Checked=true; }
-				else{
-				Trading_cards->Checked=false; }
+				ADOQueryDBGrid->Active=false;
+				TextSQL="SELECT * FROM Keys";
+				ADOQuerySelect->SQL->Clear();
+				ADOQuerySelect->SQL->Add(TextSQL);
+				ADOQuerySelect->Active=true;
+				ADOQuerySelect->FindLast();
+				Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsString;
+				Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
+				Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
+				Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
+				Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+				Number_keys->Text=ADOQuerySelect->RecordCount;
+				
+				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+				{
+					Trading_cards->Checked=true;
+				}
+				else
+				{
+					Trading_cards->Checked=false;
+				}
 
-				if(ADOQuerySelect->FieldByName("DLC")->AsString=="True"){
-				DLC->Checked=true; }
-				else{
-				DLC->Checked=false; }
+				if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+				{
+					DLC->Checked=true;
+				}
+				else
+				{
+					DLC->Checked=false;
+				}
 
-				if(ADOQuerySelect->FieldByName("Other")->AsString=="True") {
-				Other->Checked=true;}
-				else {
-				Other->Checked=false; }
+				if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+				{
+					Other->Checked=true;
+				}
+				else
+				{
+					Other->Checked=false;
+				}
 
-				if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")	{
-				Already_used->Checked=true; }
-				else{
-				Already_used->Checked=false; }
+				if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+				{
+					Already_used->Checked=true;
+				}
+				else
+				{
+					Already_used->Checked=false;
+				}
 
-			TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-			TextSQL+=Game_name->Text;
-			TextSQL+="' ORDER BY Add_date";
-			ADOQueryDBGrid->SQL->Clear();
-			ADOQueryDBGrid->SQL->Add(TextSQL);
-			ADOQueryDBGrid->Active=true;
-			Number_keys->Text=ADOQueryDBGrid->RecordCount;
+				TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+				TextSQL+=Game_name->Text;
+				TextSQL+="' ORDER BY Add_date";
+				ADOQueryDBGrid->SQL->Clear();
+				ADOQueryDBGrid->SQL->Add(TextSQL);
+				ADOQueryDBGrid->Active=true;
+				Number_keys->Text=ADOQueryDBGrid->RecordCount;
 
-			TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			Source->Items->Clear();
+				TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+				ADOQueryListBox->SQL->Clear();
+				ADOQueryListBox->SQL->Add(TextSQL);
+				ADOQueryListBox->Active=true;
+				Source->Items->Clear();
 
 				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
 				{
@@ -426,12 +460,12 @@ ADOQuerySelect->Active=true;
 					ADOQueryListBox->FindNext();
 				}
 
-			TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			GamesListBox->Items->Clear();
-			Game_name->Items->Clear();
+				TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+				ADOQueryListBox->SQL->Clear();
+				ADOQueryListBox->SQL->Add(TextSQL);
+				ADOQueryListBox->Active=true;
+				GamesListBox->Items->Clear();
+				Game_name->Items->Clear();
 
 				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
 				{
@@ -439,76 +473,85 @@ ADOQuerySelect->Active=true;
 					Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
 					ADOQueryListBox->FindNext();
 				}
-					//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-				   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-				   if (index >= 0)
-				   {
-					 //âûäåëÿåì ñòðîêó
-					 GamesListBox->ItemIndex = index;
-				   }
-
+				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+				int index = GamesListBox->Items->IndexOf(Game_name->Text);
+				if (index >= 0)
+				{
+					GamesListBox->ItemIndex = index;
+				}
 			}
+			else
+			{
+				//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+				int index = GamesListBox->Items->IndexOf(Game_name->Text);
+				if (index >= 0)
+				{
+					GamesListBox->ItemIndex = index;
+				}
 
+				TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+				TextSQL+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+				TextSQL+="' ORDER BY Add_date";
+				ADOQueryDBGrid->SQL->Clear();
+				ADOQueryDBGrid->SQL->Add(TextSQL);
+				ADOQueryDBGrid->Active=true;
+				Number_keys->Text=ADOQueryDBGrid->RecordCount;
+
+				TextSelect="SELECT * FROM Keys WHERE Game_name='";
+				TextSelect+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+				TextSelect+=" ' ORDER BY Add_date";
+				ADOQuerySelect->SQL->Clear();
+				ADOQuerySelect->SQL->Add(TextSelect);
+				ADOQuerySelect->Active=true;
+				ADOQuerySelect->FindFirst();
+				Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+				Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
+				Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
+				Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
+				Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+
+				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+				{
+					Trading_cards->Checked=true;
+				}
 				else
 				{
-					//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-				   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-				   if (index >= 0)
-				   {
-					 //âûäåëÿåì ñòðîêó
-					 GamesListBox->ItemIndex = index;
-				   }
-
-					TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-					TextSQL+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-					TextSQL+="' ORDER BY Add_date";
-					ADOQueryDBGrid->SQL->Clear();
-					ADOQueryDBGrid->SQL->Add(TextSQL);
-					ADOQueryDBGrid->Active=true;
-					Number_keys->Text=ADOQueryDBGrid->RecordCount;
-
-					TextSelect="SELECT * FROM Keys WHERE Game_name='";
-					TextSelect+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-					TextSelect+=" ' ORDER BY Add_date";
-					ADOQuerySelect->SQL->Clear();
-					ADOQuerySelect->SQL->Add(TextSelect);
-					ADOQuerySelect->Active=true;
-					ADOQuerySelect->FindFirst();
-					Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
-					Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-					Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-					Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-					Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-
-						if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True"){
-						Trading_cards->Checked=true; }
-						else{
-						Trading_cards->Checked=false; }
-
-						if(ADOQuerySelect->FieldByName("DLC")->AsString=="True"){
-						DLC->Checked=true; }
-						else{
-						DLC->Checked=false; }
-
-						if(ADOQuerySelect->FieldByName("Other")->AsString=="True") {
-						Other->Checked=true;}
-						else {
-						Other->Checked=false; }
-
-						if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")	{
-						Already_used->Checked=true; }
-						else{
-						Already_used->Checked=false; }
-
-					Delete_key->Enabled=false;
-					Key_cache=Key_link->Text.Trim();
-
+					Trading_cards->Checked=false;
 				}
-		}
 
+				if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+				{
+					DLC->Checked=true;
+				}
+				else
+				{
+					DLC->Checked=false;
+				}
+
+				if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+				{
+					Other->Checked=true;
+				}
+				else
+				{
+					Other->Checked=false;
+				}
+
+				if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+				{
+					Already_used->Checked=true; }
+				else
+				{
+					Already_used->Checked=false;
+				}
+
+				Delete_key->Enabled=false;
+				Key_cache=Key_link->Text.Trim();
+			}
+		}
 		else
 		{
-            Number_keys->Text="0";
+            		Number_keys->Text="0";
 			Add_date->DateTime.CurrentDateTime();
 			Key_link->Text="Enter a key or Indiegala link";
 			Game_name->Text="Enter a name of the game";
@@ -522,36 +565,35 @@ ADOQuerySelect->Active=true;
 			MainForm->Height=245;
 			MainForm->Width=663;
 			GaOpener->TabVisible=false;
-        }
-
-}
-catch(...){
-KeySelect->Color=clRed;
-Delete_key->Caption="ERROR";
-}
+        	}
+	}
+	catch(...){
+	KeySelect->Color=clRed;
+	Delete_key->Caption="ERROR";
+	}
 }
 //---------------------------------------------------------------------------
-
 
 void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 {
 	if(Key_link->Text.IsEmpty()||Game_name->Text.IsEmpty()||Source->Text.IsEmpty())
 	{
-	Add_Key_Button->Caption="SOME FIELDS ARE EMPTY";
-	Add_new_game->Color=clYellow;
-	Timer->Enabled=true;
+		Add_Key_Button->Caption="SOME FIELDS ARE EMPTY";
+		Add_new_game->Color=clYellow;
+		Timer->Enabled=true;
 	}
 
 	if (Key_link->Text=="Click on a key or link")
 	{
-	Add_Key_Button->Caption="Check your key or link ;)";
-	Add_new_game->Color=clYellow;
-	Key_link->Color=clRed;
-	Add_date->Date.CurrentDate();
-	Add_date->Time.CurrentTime();
-	Timer->Enabled=true;
+		Add_Key_Button->Caption="Check your key or link ;)";
+		Add_new_game->Color=clYellow;
+		Key_link->Color=clRed;
+		Add_date->Date.CurrentDate();
+		Add_date->Time.CurrentTime();
+		Timer->Enabled=true;
 	}
-		else{
+	else
+	{
 		ADOQuerySelect->SQL->Clear();
 		AnsiString TextSQL;
 		TextSQL="INSERT INTO Keys(Add_date, Key_link, Game_name, Source, Trading_cards, DLC, Other, Already_used, Notes)";
@@ -562,109 +604,112 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 		ADOQuerySelect->Parameters->Items[2]->Value=Game_name->Text.Trim();
 		ADOQuerySelect->Parameters->Items[3]->Value=Source->Text.Trim();
 		ADOQuerySelect->Parameters->Items[8]->Value=Notes->Text.Trim();
-	if(Trading_cards->Checked==true)
-	{
-	ADOQuerySelect->Parameters->Items[4]->Value=1;
-	}
+		
+		if(Trading_cards->Checked==true)
+		{
+			ADOQuerySelect->Parameters->Items[4]->Value=1;
+		}
 		else
 		{
-		ADOQuerySelect->Parameters->Items[4]->Value=0;
+			ADOQuerySelect->Parameters->Items[4]->Value=0;
 		}
-	if(DLC->Checked==true)
-	{
-	ADOQuerySelect->Parameters->Items[5]->Value=1;
-	}
+	
+		if(DLC->Checked==true)
+		{
+			ADOQuerySelect->Parameters->Items[5]->Value=1;
+		}
 		else
 		{
-		ADOQuerySelect->Parameters->Items[5]->Value=0;
+			ADOQuerySelect->Parameters->Items[5]->Value=0;
 		}
-	if(Other->Checked==true)
-	{
-	ADOQuerySelect->Parameters->Items[6]->Value=1;
-	}
+		
+		if(Other->Checked==true)
+		{
+			ADOQuerySelect->Parameters->Items[6]->Value=1;
+		}
 		else
 		{
-		ADOQuerySelect->Parameters->Items[6]->Value=0;
+			ADOQuerySelect->Parameters->Items[6]->Value=0;
 		}
-	if(Already_used->Checked==true)
-	{
-	ADOQuerySelect->Parameters->Items[7]->Value=1;
-	}
+		
+		if(Already_used->Checked==true)
+		{
+			ADOQuerySelect->Parameters->Items[7]->Value=1;
+		}
 		else
 		{
-		ADOQuerySelect->Parameters->Items[7]->Value=0;
+			ADOQuerySelect->Parameters->Items[7]->Value=0;
 		}
 
+		try
+		{
+			ADOQuerySelect->ExecSQL();
+			ADOQuerySelect->SQL->Clear();
 
+			Add_Key_Button->Caption="KEY ADDED";
+			Add_new_game->Color=clLime;
+			Timer->Enabled=true;
+			Key_link->Clear();
+			Delete_key->Enabled=false;
 
-try{
-ADOQuerySelect->ExecSQL();
-ADOQuerySelect->SQL->Clear();
+			TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+			ADOQueryListBox->SQL->Clear();
+			ADOQueryListBox->SQL->Add(TextSQL);
+			ADOQueryListBox->Active=true;
+			Source->Items->Clear();
 
-Add_Key_Button->Caption="KEY ADDED";
-Add_new_game->Color=clLime;
-Timer->Enabled=true;
-Key_link->Clear();
-Delete_key->Enabled=false;
+			for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+			{
+				Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
+				ADOQueryListBox->FindNext();
+			}
 
-TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-ADOQueryListBox->SQL->Clear();
-ADOQueryListBox->SQL->Add(TextSQL);
-ADOQueryListBox->Active=true;
-Source->Items->Clear();
+			TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+			ADOQueryListBox->SQL->Clear();
+			ADOQueryListBox->SQL->Add(TextSQL);
+			ADOQueryListBox->Active=true;
+			GamesListBox->Items->Clear();
+			Game_name->Items->Clear();
 
-	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-	{
-		Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
-		ADOQueryListBox->FindNext();
+			for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+			{
+				GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+				Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+				ADOQueryListBox->FindNext();
+			}
+
+			//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
+			int index = GamesListBox->Items->IndexOf(Game_name->Text);
+			if (index >= 0)
+			{
+				GamesListBox->ItemIndex = index;
+			}
+
+			KeySelect->Visible=true;
+			Game_select->Visible=true;
+			SortingBox->Visible=true;
+			Update_key->Enabled=true;
+			MainForm->Height=555;
+			MainForm->Width=1123;
+			GaOpener->TabVisible=true;
+		}
+		
+		catch(...)
+		{
+		Add_Key_Button->Caption="ERROR";
+		Add_new_game->Color=clRed;
+		Timer->Enabled=true;
+		}
 	}
 
-TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-ADOQueryListBox->SQL->Clear();
-ADOQueryListBox->SQL->Add(TextSQL);
-ADOQueryListBox->Active=true;
-GamesListBox->Items->Clear();
-Game_name->Items->Clear();
-
-	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-	{
-		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-		Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-		ADOQueryListBox->FindNext();
-	}
-
-	//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-   if (index >= 0)
-   {
-	 //âûäåëÿåì ñòðîêó
-	 GamesListBox->ItemIndex = index;
-   }
-
-	KeySelect->Visible=true;
-	Game_select->Visible=true;
-	SortingBox->Visible=true;
-	Update_key->Enabled=true;
-	MainForm->Height=555;
-	MainForm->Width=1123;
-	GaOpener->TabVisible=true;
-
-}
-catch(...){
-Add_Key_Button->Caption="ERROR";
-Add_new_game->Color=clRed;
-Timer->Enabled=true;
-}
-}
-
-TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-TextSQL+=Game_name->Text;
-TextSQL+="' ORDER BY Add_date";
-ADOQueryDBGrid->SQL->Clear();
-ADOQueryDBGrid->SQL->Add(TextSQL);
-ADOQueryDBGrid->Active=true;
-Number_keys->Text=ADOQueryDBGrid->RecordCount;
-Key_cache=Key_link->Text.Trim();
+	TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+	TextSQL+=Game_name->Text;
+	TextSQL+="' ORDER BY Add_date";
+	ADOQueryDBGrid->SQL->Clear();
+	ADOQueryDBGrid->SQL->Add(TextSQL);
+	ADOQueryDBGrid->Active=true;
+	Number_keys->Text=ADOQueryDBGrid->RecordCount;
+	Key_cache=Key_link->Text.Trim();
 }
 //---------------------------------------------------------------------------
 
