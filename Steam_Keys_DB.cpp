@@ -212,70 +212,84 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 	Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
 	Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
 
-		if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True"){
-		Trading_cards->Checked=true; }
-		else{
-		Trading_cards->Checked=false; }
+		if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+		{
+			Trading_cards->Checked=true;
+		}
+		else
+		{
+			Trading_cards->Checked=false;
+		}
 
-		if(ADOQuerySelect->FieldByName("DLC")->AsString=="True"){
-		DLC->Checked=true; }
-		else{
-		DLC->Checked=false; }
+		if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+		{
+			DLC->Checked=true;
+		}
+		else
+		{
+			DLC->Checked=false;
+		}
 
-		if(ADOQuerySelect->FieldByName("Other")->AsString=="True") {
-		Other->Checked=true;}
-		else {
-		Other->Checked=false; }
+		if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+		{
+			Other->Checked=true;
+		}
+		else
+		{
+			Other->Checked=false;
+		}
 
-		if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")	{
-		Already_used->Checked=true; }
-		else{
-		Already_used->Checked=false; }
+		if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+		{
+			Already_used->Checked=true;
+		}
+		else
+		{
+			Already_used->Checked=false;
+		}
 
 		if (Multiselection->Checked==false)
 		{
 			Clipboard()->AsText = ADOQuerySelect->FieldByName("Key_link")->AsString + " - " + ADOQuerySelect->FieldByName("Game_name")->AsString;
 		}
+		else
+		{
+			if (Only_keys->Checked==true)
+			{
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString);
+			}
 			else
 			{
-				if (Only_keys->Checked==true)
-				{
-					Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString);
-				}
-					else
-					{
-						Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString + " - " + ADOQuerySelect->FieldByName("Game_name")->AsString);
-					}
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString + " - " + ADOQuerySelect->FieldByName("Game_name")->AsString);
 			}
+		}
 
-			TextSelect="SELECT * FROM Keys WHERE Game_name='";
-			TextSelect+=Game_name->Text;
-			TextSelect+=" ' ";
-			ADOQuerySelect->SQL->Clear();
-			ADOQuerySelect->SQL->Add(TextSelect);
-			ADOQuerySelect->Active=true;
-						//èùåì óêàçàííûé ýëåìåíò è ïîëó÷àåì åãî èíäåêñ
-				   int index = GamesListBox->Items->IndexOf(Game_name->Text);
-				   if (index >= 0)
-				   {
-					 //âûäåëÿåì ñòðîêó
-					 GamesListBox->ItemIndex = index;
-				   }
-			Number_keys->Text=ADOQuerySelect->RecordCount;
-			Delete_key->Caption="Delete key";
-			Delete_key->Enabled=true;
-			if (Multiselection->Checked==true)
-			{
-			Copy_buffer->Enabled=true;
-			}
-
-			Key_cache=Key_link->Text.Trim();
-			if (Game_name->Text.IsEmpty())
-			{
-            Add_date->DateTime.CurrentDateTime();
-			Key_link->Text="Click on a key or link";
-			Game_name->Text="Click on a key or link";
-			}
+	TextSelect="SELECT * FROM Keys WHERE Game_name='";
+	TextSelect+=Game_name->Text;
+	TextSelect+=" ' ";
+	ADOQuerySelect->SQL->Clear();
+	ADOQuerySelect->SQL->Add(TextSelect);
+	ADOQuerySelect->Active=true;
+	// Set selected item in games list corresponding to game name field
+	int index = GamesListBox->Items->IndexOf(Game_name->Text);
+	if (index >= 0)
+	{
+		GamesListBox->ItemIndex = index;
+	}
+	Number_keys->Text=ADOQuerySelect->RecordCount;
+	Delete_key->Caption="Delete key";
+	Delete_key->Enabled=true;
+	if (Multiselection->Checked==true)
+	{
+		Copy_buffer->Enabled=true;
+	}
+	Key_cache=Key_link->Text.Trim();
+	if (Game_name->Text.IsEmpty())
+	{
+        	Add_date->DateTime.CurrentDateTime();
+		Key_link->Text="Click on a key or link";
+		Game_name->Text="Click on a key or link";
+	}
 }
 //---------------------------------------------------------------------------
 
