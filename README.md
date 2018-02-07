@@ -1,2 +1,2 @@
 # SteamKeysManager
-Software allows you to store and manage your keys and gift-links
+Software allows you to store and manage your keys and Indiegala links
