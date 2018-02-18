@@ -13,7 +13,7 @@
 TMainForm *MainForm;
 int count_record;
 AnsiString TextSQL, TextDelete, TextSelect, TextUpdate, Key_cache, TextSQLList;
-AnsiString URL, BOT, Path;
+AnsiString URL, BOT, Path, Cache;
 
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TForm(Owner)
@@ -255,7 +255,14 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 		{
 			if (Only_keys->Checked==true)
 			{
-				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString);
+				if (Key_buffer->Lines->Text.IsEmpty())
+				{
+					Key_buffer->Lines->Add("!redeem " + ADOQuerySelect->FieldByName("Key_link")->AsString);
+				}
+				else
+				{
+					Key_buffer->Lines->Text=Key_buffer->Lines->Text.Trim() + "," + ADOQuerySelect->FieldByName("Key_link")->AsString;
+				}
 			}
 			else
 			{
