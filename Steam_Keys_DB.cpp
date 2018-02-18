@@ -13,7 +13,7 @@
 TMainForm *MainForm;
 int count_record;
 AnsiString TextSQL, TextDelete, TextSelect, TextUpdate, Key_cache, TextSQLList;
-AnsiString URL, BOT, Path, Cache;
+AnsiString URL, BOT, Path;
 
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TForm(Owner)
@@ -22,7 +22,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    MainForm->Caption="Steam Keys Database 2018.02.05";
+    MainForm->Caption="Steam Keys Database 2018.02.18";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -1243,3 +1243,6 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
+
+
+
