@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 100
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Steam Keys Database 2017.06.09'
+  Caption = 'caption'
   ClientHeight = 526
   ClientWidth = 1131
   Color = clBtnFace
@@ -23,7 +23,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1123
     Height = 529
-    ActivePage = GaOpener
+    ActivePage = SKDB
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
@@ -78,7 +78,7 @@ object MainForm: TMainForm
           Top = 13
           Width = 97
           Height = 17
-          Caption = 'Only keys'
+          Caption = '!redeem'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -208,7 +208,7 @@ object MainForm: TMainForm
         ParentFont = False
         TabOrder = 3
         object DBGridKeys_list: TDBGrid
-          Left = 4
+          Left = 3
           Top = 14
           Width = 1105
           Height = 232
