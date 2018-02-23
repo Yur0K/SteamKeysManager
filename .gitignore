@@ -1,0 +1,14 @@
+*.local.#00
+*.exe
+*.ilc
+*.ild
+*.ilf
+*.ils
+*.map
+*.obj
+*.pch
+*.tds
+*.#00
+*.mdb
+*.local
+*.~1~
