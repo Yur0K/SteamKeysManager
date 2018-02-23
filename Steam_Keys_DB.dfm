@@ -702,6 +702,7 @@ object MainForm: TMainForm
     Top = 360
   end
   object ADOQuerySelect: TADOQuery
+    Connection = ADOConnection
     Parameters = <>
     Left = 968
     Top = 360
