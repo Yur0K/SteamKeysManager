@@ -22,7 +22,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    MainForm->Caption="Steam Keys Manager 2018.02.18";
+	MainForm->Caption="Steam Keys Manager 2018.02.23";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -99,7 +99,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 		MainForm->Width=663;
 		GaOpener->TabVisible=false;
 	}
-	// Selecting all keys and filling up lists sorted by date if DB is not empty 
+	// Selecting all keys and filling up lists sorted by date if DB is not empty
 	else
 	{
 		KeySelect->Visible=true;
@@ -1174,7 +1174,7 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 {
 	Browser->Items->Clear();
 	TSearchRec Rec;
-	
+
 	switch (Device->ItemIndex)
 	{
 		case 0:
