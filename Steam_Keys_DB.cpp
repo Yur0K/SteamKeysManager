@@ -22,7 +22,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    MainForm->Caption="Steam Keys Database 2018.02.18";
+	MainForm->Caption="Steam Keys Manager 2018.02.23";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -99,7 +99,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 		MainForm->Width=663;
 		GaOpener->TabVisible=false;
 	}
-	// Selecting all keys and filling up lists if DB is not empty
+	// Selecting all keys and filling up lists sorted by date if DB is not empty
 	else
 	{
 		KeySelect->Visible=true;
@@ -1163,7 +1163,7 @@ void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 {
 	if (Groups_list->ItemIndex!=-1)
 	{
-		URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
+		URL = Groups_list->Items->Strings[Groups_list->ItemIndex];
 		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
@@ -1174,7 +1174,6 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 {
 	Browser->Items->Clear();
 	TSearchRec Rec;
-	Path = ExtractFileDir(Application->ExeName);
 
 	switch (Device->ItemIndex)
 	{
@@ -1190,7 +1189,7 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 		;
 	}
 
-	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
+	if(FindFirst(Path + "\\*.lnk", faAnyFile , Rec) == 0)
 	{
 		do
 		{
@@ -1243,6 +1242,3 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
-
-
-
