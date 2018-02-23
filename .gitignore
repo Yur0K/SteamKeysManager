@@ -2,3 +2,13 @@
 *.cbproj
 *.local
 *.res
+*.#00
+*.exe
+*.ilc
+*.ild
+*.ilf
+*.ils
+*.map
+*.obj
+*.pch
+*.tds
