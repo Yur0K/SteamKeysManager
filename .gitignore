@@ -1,4 +1,3 @@
-
 *.local.#00
 *.exe
 *.ilc
@@ -10,5 +9,4 @@
 *.pch
 *.tds
 *.#00
-*.mdb
 *.mdb
