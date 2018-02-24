@@ -92,6 +92,7 @@ object MainForm: TMainForm
           Top = 20
           Width = 129
           Height = 24
+          AutoComplete = False
           Style = csDropDownList
           DropDownCount = 9
           Font.Charset = DEFAULT_CHARSET
@@ -515,18 +516,19 @@ object MainForm: TMainForm
         end
         object Activation_link: TComboBox
           Left = 491
-          Top = 159
+          Top = 156
           Width = 155
-          Height = 22
+          Height = 24
+          AutoComplete = False
+          DropDownCount = 9
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -13
           Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
+          Font.Style = []
           ParentFont = False
           TabOrder = 14
-          Text = 'Activation link'
-          OnChange = Activation_linkChange
+          OnChange = Activation_link_Change
         end
       end
     end

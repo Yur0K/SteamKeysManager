@@ -52,7 +52,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 
 	// Filling up a list of browsers
 	Browser->Items->Clear();
-	Activation_link->Items->Clear();
+	Activation_link->Text="Open activation link";
 	TSearchRec Rec;
 	Path = ExtractFileDir(Application->ExeName);
 
@@ -80,7 +80,6 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 			Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
 		}
 			while(FindNext(Rec) == 0);
-        //Activation_link->DropDownCount=Activation_link->
 	}
 	FindClose(Rec);
 
@@ -1247,7 +1246,7 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
 
-void __fastcall TMainForm::Activation_linkChange(TObject *Sender)
+void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
 {
 	if (Activation_link->ItemIndex!=-1)
 	{
@@ -1256,5 +1255,4 @@ void __fastcall TMainForm::Activation_linkChange(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
-//---------------------------------------------------------------------------
 

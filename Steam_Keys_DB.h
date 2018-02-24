@@ -107,7 +107,7 @@ __published:	// IDE-managed Components
 	void __fastcall TrayIconClick(TObject *Sender);
 	void __fastcall FormHide(TObject *Sender);
 	void __fastcall Form_hideClick(TObject *Sender);
-	void __fastcall Activation_linkChange(TObject *Sender);
+	void __fastcall Activation_link_Change(TObject *Sender);
 
 private:	// User declarations
 public:		// User declarations
