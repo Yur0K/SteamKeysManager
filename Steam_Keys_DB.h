@@ -15,6 +15,7 @@
 #include <ComCtrls.hpp>
 #include <Buttons.hpp>
 #include <Tabs.hpp>
+#include <Vcl.WinXCalendars.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {

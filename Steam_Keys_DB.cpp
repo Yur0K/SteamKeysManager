@@ -5,7 +5,7 @@
 #include <vcl.h>
 #include <conio.h>
 #include <stdio.h>
-#include <vcl\Clipbrd.hpp>
+#include <Clipbrd.hpp>
 #include "Steam_Keys_DB.h"
 #pragma hdrstop
 #pragma package(smart_init)
