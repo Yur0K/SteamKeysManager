@@ -23,7 +23,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1123
     Height = 529
-    ActivePage = SKDB
+    ActivePage = GaOpener
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
@@ -516,7 +516,7 @@ object MainForm: TMainForm
         end
         object Activation_link: TComboBox
           Left = 491
-          Top = 156
+          Top = 157
           Width = 155
           Height = 24
           AutoComplete = False
@@ -535,6 +535,12 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
+      object Image1: TImage
+        Left = 383
+        Top = 335
+        Width = 105
+        Height = 105
+      end
       object Links_list: TListBox
         Left = 0
         Top = 35
@@ -684,6 +690,19 @@ object MainForm: TMainForm
         Caption = 'Hide'
         TabOrder = 14
         OnClick = Form_hideClick
+      end
+      object CppWebBrowser1: TCppWebBrowser
+        Left = 56
+        Top = 344
+        Width = 249
+        Height = 106
+        TabOrder = 15
+        ControlData = {
+          4C000000BC190000F50A00000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
       end
     end
   end
