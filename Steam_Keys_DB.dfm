@@ -92,6 +92,7 @@ object MainForm: TMainForm
           Top = 20
           Width = 129
           Height = 24
+          AutoComplete = False
           Style = csDropDownList
           DropDownCount = 9
           Font.Charset = DEFAULT_CHARSET
@@ -118,13 +119,11 @@ object MainForm: TMainForm
           Width = 103
           Height = 26
           Caption = 'Delete key'
-          DoubleBuffered = True
           Font.Charset = RUSSIAN_CHARSET
           Font.Color = clRed
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
-          ParentDoubleBuffered = False
           ParentFont = False
           TabOrder = 4
           OnClick = Delete_keyClick
@@ -176,10 +175,11 @@ object MainForm: TMainForm
         ParentFont = False
         TabOrder = 2
         object GamesListBox: TListBox
-          Left = 4
-          Top = 13
+          Left = 3
+          Top = 14
           Width = 453
           Height = 229
+          AutoComplete = False
           AutoCompleteDelay = 1000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -187,6 +187,7 @@ object MainForm: TMainForm
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
+          ScrollWidth = 5
           TabOrder = 0
           OnClick = GamesListBoxClick
         end
@@ -208,7 +209,7 @@ object MainForm: TMainForm
         ParentFont = False
         TabOrder = 3
         object DBGridKeys_list: TDBGrid
-          Left = 3
+          Left = 5
           Top = 14
           Width = 1105
           Height = 232
@@ -231,7 +232,7 @@ object MainForm: TMainForm
       end
       object Add_new_game: TGroupBox
         Left = 0
-        Top = 0
+        Top = 3
         Width = 649
         Height = 188
         Caption = 'Information'
@@ -401,8 +402,8 @@ object MainForm: TMainForm
         end
         object Add_Key_Button: TButton
           Left = 3
-          Top = 155
-          Width = 319
+          Top = 156
+          Width = 238
           Height = 27
           Caption = 'Add key'
           Font.Charset = DEFAULT_CHARSET
@@ -473,9 +474,9 @@ object MainForm: TMainForm
           Text = '999999'
         end
         object Update_key: TButton
-          Left = 327
-          Top = 155
-          Width = 319
+          Left = 247
+          Top = 156
+          Width = 238
           Height = 27
           Caption = 'Update info'
           Font.Charset = DEFAULT_CHARSET
@@ -512,6 +513,22 @@ object MainForm: TMainForm
           ParentFont = False
           TabOrder = 13
           OnClick = Copy_from_clipboardClick
+        end
+        object Activation_link: TComboBox
+          Left = 491
+          Top = 156
+          Width = 155
+          Height = 24
+          AutoComplete = False
+          DropDownCount = 9
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 14
+          OnChange = Activation_link_Change
         end
       end
     end
@@ -617,13 +634,11 @@ object MainForm: TMainForm
         Width = 186
         Height = 26
         Caption = 'DELETE Group'
-        DoubleBuffered = True
         Font.Charset = RUSSIAN_CHARSET
         Font.Color = clRed
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
-        ParentDoubleBuffered = False
         ParentFont = False
         TabOrder = 10
         OnClick = Delete_groupClick
@@ -634,13 +649,11 @@ object MainForm: TMainForm
         Width = 186
         Height = 26
         Caption = 'DELETE Link'
-        DoubleBuffered = True
         Font.Charset = RUSSIAN_CHARSET
         Font.Color = clRed
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
-        ParentDoubleBuffered = False
         ParentFont = False
         TabOrder = 11
         OnClick = Delete_linkClick
@@ -5511,7 +5524,7 @@ object MainForm: TMainForm
       000000000000000000000000000000000000F80F0000FC0F0000FF9F0000FFFF
       0000FFFF0000}
     OnClick = TrayIconClick
-    Left = 360
-    Top = 408
+    Left = 512
+    Top = 400
   end
 end

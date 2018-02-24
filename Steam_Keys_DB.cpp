@@ -5,7 +5,7 @@
 #include <vcl.h>
 #include <conio.h>
 #include <stdio.h>
-#include <vcl\Clipbrd.hpp>
+#include <Clipbrd.hpp>
 #include "Steam_Keys_DB.h"
 #pragma hdrstop
 #pragma package(smart_init)
@@ -22,8 +22,8 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-	MainForm->Caption="Steam Keys Manager 2018.02.23";
-	// Defining ConnectionString to SteamDB.mdb database
+	MainForm->Caption="Steam Keys Database 2018.02.24";
+  // Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
 	ADOConnection->Connected="true";
@@ -52,10 +52,11 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 
 	// Filling up a list of browsers
 	Browser->Items->Clear();
+	Activation_link->Text="Open activation link";
 	TSearchRec Rec;
 	Path = ExtractFileDir(Application->ExeName);
 
-	// Filling up a list of devices
+    // Filling up a list of devices
 	switch (Device->ItemIndex)
 	{
 		case 0:
@@ -70,12 +71,13 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 			;
 	}
 
-	// Filling up browsers list
+    // Filling up a list of browsers
 	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
 	{
 		do
 		{
 			Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
+			Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
 		}
 			while(FindNext(Rec) == 0);
 	}
@@ -1241,4 +1243,14 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
+}
+
+void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
+{
+	if (Activation_link->ItemIndex!=-1)
+	{
+		URL="https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
+		BOT = Path + Activation_link->Items->Strings[Activation_link->ItemIndex];
+		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+	}
 }
