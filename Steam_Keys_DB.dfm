@@ -518,10 +518,6 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Links_list: TListBox
         Left = 0
         Top = 35
