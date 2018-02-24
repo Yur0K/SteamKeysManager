@@ -174,8 +174,8 @@ object MainForm: TMainForm
         ParentFont = False
         TabOrder = 2
         object GamesListBox: TListBox
-          Left = 4
-          Top = 13
+          Left = 3
+          Top = 14
           Width = 453
           Height = 229
           AutoCompleteDelay = 1000
@@ -516,6 +516,8 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
+      ExplicitLeft = 8
+      ExplicitTop = 28
       object Links_list: TListBox
         Left = 0
         Top = 35
@@ -5505,7 +5507,7 @@ object MainForm: TMainForm
       000000000000000000000000000000000000F80F0000FC0F0000FF9F0000FFFF
       0000FFFF0000}
     OnClick = TrayIconClick
-    Left = 360
-    Top = 408
+    Left = 512
+    Top = 400
   end
 end
