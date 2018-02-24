@@ -178,6 +178,7 @@ object MainForm: TMainForm
           Top = 14
           Width = 453
           Height = 229
+          AutoComplete = False
           AutoCompleteDelay = 1000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -185,6 +186,7 @@ object MainForm: TMainForm
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
+          ScrollWidth = 5
           TabOrder = 0
           OnClick = GamesListBoxClick
         end
@@ -206,7 +208,7 @@ object MainForm: TMainForm
         ParentFont = False
         TabOrder = 3
         object DBGridKeys_list: TDBGrid
-          Left = 3
+          Left = 5
           Top = 14
           Width = 1105
           Height = 232
@@ -229,7 +231,7 @@ object MainForm: TMainForm
       end
       object Add_new_game: TGroupBox
         Left = 0
-        Top = 0
+        Top = 3
         Width = 649
         Height = 188
         Caption = 'Information'
@@ -399,8 +401,8 @@ object MainForm: TMainForm
         end
         object Add_Key_Button: TButton
           Left = 3
-          Top = 155
-          Width = 319
+          Top = 156
+          Width = 238
           Height = 27
           Caption = 'Add key'
           Font.Charset = DEFAULT_CHARSET
@@ -471,9 +473,9 @@ object MainForm: TMainForm
           Text = '999999'
         end
         object Update_key: TButton
-          Left = 327
-          Top = 155
-          Width = 319
+          Left = 247
+          Top = 156
+          Width = 238
           Height = 27
           Caption = 'Update info'
           Font.Charset = DEFAULT_CHARSET
@@ -511,13 +513,26 @@ object MainForm: TMainForm
           TabOrder = 13
           OnClick = Copy_from_clipboardClick
         end
+        object Activation_link: TComboBox
+          Left = 491
+          Top = 159
+          Width = 155
+          Height = 22
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 14
+          Text = 'Activation link'
+          OnChange = Activation_linkChange
+        end
       end
     end
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
-      ExplicitLeft = 8
-      ExplicitTop = 28
       object Links_list: TListBox
         Left = 0
         Top = 35

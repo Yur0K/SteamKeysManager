@@ -77,6 +77,7 @@ __published:	// IDE-managed Components
 	TButton *Form_Normal;
 	TTrayIcon *TrayIcon;
 	TButton *Form_hide;
+	TComboBox *Activation_link;
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall DBGridKeys_listCellClick(TColumn *Column);
 	void __fastcall GamesListBoxClick(TObject *Sender);
@@ -106,6 +107,7 @@ __published:	// IDE-managed Components
 	void __fastcall TrayIconClick(TObject *Sender);
 	void __fastcall FormHide(TObject *Sender);
 	void __fastcall Form_hideClick(TObject *Sender);
+	void __fastcall Activation_linkChange(TObject *Sender);
 
 private:	// User declarations
 public:		// User declarations

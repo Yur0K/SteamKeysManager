@@ -22,7 +22,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    MainForm->Caption="Steam Keys Database 2018.02.18";
+	MainForm->Caption="Steam Keys Database 2018.02.24";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -52,10 +52,11 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 
 	// Filling up a list of browsers
 	Browser->Items->Clear();
+	Activation_link->Items->Clear();
 	TSearchRec Rec;
 	Path = ExtractFileDir(Application->ExeName);
 
-	// Filling up a list of devices
+    // Filling up a list of devices
 	switch (Device->ItemIndex)
 	{
 		case 0:
@@ -70,14 +71,16 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 			;
 	}
 
-	// Filling up browsers list
+    // Filling up a list of browsers
 	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
 	{
 		do
 		{
 			Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
+			Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
 		}
 			while(FindNext(Rec) == 0);
+        //Activation_link->DropDownCount=Activation_link->
 	}
 	FindClose(Rec);
 
@@ -1244,5 +1247,14 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
 
-
+void __fastcall TMainForm::Activation_linkChange(TObject *Sender)
+{
+	if (Activation_link->ItemIndex!=-1)
+	{
+		URL="https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
+		BOT = Path + Activation_link->Items->Strings[Activation_link->ItemIndex];
+		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+	}
+}
+//---------------------------------------------------------------------------
 
