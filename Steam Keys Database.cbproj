@@ -62,7 +62,7 @@
         <Multithreaded>true</Multithreaded>
         <ProjectType>CppVCLApplication</ProjectType>
         <PackageImports>vcl.bpi;rtl.bpi;bcbie.bpi;vclx.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vclimg.bpi;dbrtl.bpi;vcldb.bpi;bdertl.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;Tee.bpi;TeeDB.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DataSnapServer.bpi;DbxClientDriver.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;dbxcds.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;$(PackageImports)</PackageImports>
-        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <IncludePath>$(CG_BOOST_ROOT)\boost\tr1\tr1;$(BDS)\include;$(BDS)\include\vcl;$(CG_BOOST_ROOT);$(IncludePath)</IncludePath>
         <ILINK_LibraryPath>$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;$(ILINK_LibraryPath)</ILINK_LibraryPath>
@@ -96,6 +96,11 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -119,9 +124,14 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <Defines>_DEBUG;$(Defines)</Defines>
+        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib</LinkPackageStatics>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <Defines>_DEBUG;$(Defines)</Defines>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppEnableHighDPI>true</AppEnableHighDPI>
+        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib</LinkPackageStatics>
+        <BT_BuildType>AppStore</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <IntermediateOutputDir>Release</IntermediateOutputDir>
@@ -136,6 +146,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppEnableHighDPI>true</AppEnableHighDPI>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="Steam Keys Database.cpp">
