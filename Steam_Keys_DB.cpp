@@ -23,10 +23,9 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    Image1->Picture
-	CppWebBrowser1->Navigate( WideString("http://cdn.akamai.steamstatic.com/steam/apps/595440/header.jpg").c_bstr(), NULL, NULL, NULL, NULL);
+	CppWebBrowser1->Navigate(WideString("http://cdn.akamai.steamstatic.com/steam/apps/595440/header.jpg").c_bstr(), NULL, NULL, NULL, NULL);
 
-	MainForm->Caption="Steam Keys Database 2018.02.24";
+	MainForm->Caption="Steam Keys Database";
 	// Defining ConnectionString to SteamDB.mdb database
 	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
 	// Starting ADOConnction
@@ -60,7 +59,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 	TSearchRec Rec;
 	Path = ExtractFileDir(Application->ExeName);
 
-    // Filling up a list of devices
+    	// Filling up a list of devices
 	switch (Device->ItemIndex)
 	{
 		case 0:
@@ -75,7 +74,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 			;
 	}
 
-    // Filling up a list of browsers
+    	// Filling up a list of browsers
 	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
 	{
 		do
@@ -576,9 +575,10 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 			GaOpener->TabVisible=false;
         	}
 	}
-	catch(...){
-	KeySelect->Color=clRed;
-	Delete_key->Caption="ERROR";
+	catch(...)
+	{
+		KeySelect->Color=clRed;
+		Delete_key->Caption="ERROR";
 	}
 }
 //---------------------------------------------------------------------------
@@ -705,9 +705,9 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 
 		catch(...)
 		{
-		Add_Key_Button->Caption="ERROR";
-		Add_new_game->Color=clRed;
-		Timer->Enabled=true;
+			Add_Key_Button->Caption="ERROR";
+			Add_new_game->Color=clRed;
+			Timer->Enabled=true;
 		}
 	}
 
