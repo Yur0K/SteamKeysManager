@@ -81,7 +81,6 @@ __published:	// IDE-managed Components
 	TButton *Form_hide;
 	TComboBox *Activation_link;
 	TCppWebBrowser *CppWebBrowser1;
-	TImage *Image1;
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall DBGridKeys_listCellClick(TColumn *Column);
 	void __fastcall GamesListBoxClick(TObject *Sender);
