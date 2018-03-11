@@ -23,7 +23,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1123
     Height = 529
-    ActivePage = GaOpener
+    ActivePage = SKDB
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
@@ -535,12 +535,6 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
-      object Image1: TImage
-        Left = 383
-        Top = 335
-        Width = 105
-        Height = 105
-      end
       object Links_list: TListBox
         Left = 0
         Top = 35

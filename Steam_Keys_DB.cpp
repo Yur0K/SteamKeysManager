@@ -23,182 +23,188 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-	CppWebBrowser1->Navigate(WideString("http://cdn.akamai.steamstatic.com/steam/apps/595440/header.jpg").c_bstr(), NULL, NULL, NULL, NULL);
-
-	MainForm->Caption="Steam Keys Database";
-	// Defining ConnectionString to SteamDB.mdb database
-	ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
-	// Starting ADOConnction
-	ADOConnection->Connected="true";
-	// ADOQuerySelect query using ADOConnection connection
-	ADOQuerySelect->Connection=ADOConnection;
-	// Selecting all rows from Keys table
-	TextSQL="SELECT * FROM Keys";
-	ADOQuerySelect->SQL->Clear();
-	ADOQuerySelect->SQL->Add(TextSQL);
-	ADOQuerySelect->Active=true;
-	// Adjusting iterface elements
-	Delete_key->Enabled=false;
-	Add_new_game->Visible=true;
-	Key_buffer->Visible=false;
-	Copy_buffer->Enabled=false;
-	Only_keys->Visible=false;
-	Only_keys->Checked=false;
-	Multiselection->Left=548;
-	Multiselection->Top=23;
-	Key_link->MaxLength=71;
-	Game_name->MaxLength=60;
-	Source->MaxLength=25;
-	SortBox->ItemIndex=0;
-	Device->ItemIndex = 0;
-	SKDB->Show();
-
-	// Filling up a list of browsers
-	Browser->Items->Clear();
-	Activation_link->Text="Open activation link";
-	TSearchRec Rec;
-	Path = ExtractFileDir(Application->ExeName);
-
-    	// Filling up a list of devices
-	switch (Device->ItemIndex)
+    try
 	{
-		case 0:
-		Path = Path + "\\PC\\";
-		break;
-
-		case 1:
-		Path = Path + "\\Notebook\\";
-		break;
-
-		default:
-			;
-	}
-
-    	// Filling up a list of browsers
-	if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
-	{
-		do
-		{
-			Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-			Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-		}
-			while(FindNext(Rec) == 0);
-	}
-	FindClose(Rec);
-
-	// Disable some interface items and fill up test fields with messages if database is empty
-	if (ADOQuerySelect->RecordCount==0)
-	{
-		Number_keys->Text="0";
-		Add_date->DateTime.CurrentDateTime();
-		Key_link->Text="Enter a key or Indiegala link";
-		Game_name->Text="Enter a name of the game";
-		Source->Text="Enter source";
-		Notes->Text="You can write down some notes here. Delete this text for now :)";
-
-		KeySelect->Visible=false;
-		Game_select->Visible=false;
-		SortingBox->Visible=false;
-		Update_key->Enabled=false;
-		MainForm->Height=245;
-		MainForm->Width=663;
-		GaOpener->TabVisible=false;
-	}
-	// Selecting all keys and filling up lists sorted by date if DB is not empty
-	else
-	{
-		KeySelect->Visible=true;
-		Game_select->Visible=true;
-		SortingBox->Visible=true;
-		Update_key->Enabled=true;
-		MainForm->Height=555;
-		MainForm->Width=1123;
-		GaOpener->TabVisible=true;
-
-		TextSQL="SELECT * FROM Keys ORDER BY Add_date ASC";
+		MainForm->Caption="Steam Keys Database";
+		// Defining ConnectionString to SteamDB.mdb database
+		ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
+		// Starting ADOConnction
+		ADOConnection->Connected="true";
+		// ADOQuerySelect query using ADOConnection connection
+		ADOQuerySelect->Connection=ADOConnection;
+		// Selecting all rows from Keys table
+		TextSQL="SELECT * FROM Keys";
 		ADOQuerySelect->SQL->Clear();
 		ADOQuerySelect->SQL->Add(TextSQL);
 		ADOQuerySelect->Active=true;
-		ADOQuerySelect->FindLast();
-		Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsString;
-		Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-		Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-		Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-		Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-			if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
-			{
-				Trading_cards->Checked=true;
-			}
-			else
-			{
-				Trading_cards->Checked=false;
-			}
+		// Adjusting iterface elements
+		Delete_key->Enabled=false;
+		Add_new_game->Visible=true;
+		Key_buffer->Visible=false;
+		Copy_buffer->Enabled=false;
+		Only_keys->Visible=false;
+		Only_keys->Checked=false;
+		Multiselection->Left=548;
+		Multiselection->Top=23;
+		Key_link->MaxLength=71;
+		Game_name->MaxLength=60;
+		Source->MaxLength=25;
+		SortBox->ItemIndex=0;
+		Device->ItemIndex = 0;
+		SKDB->Show();
 
-			if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
-			{
-				DLC->Checked=true;
-			}
-			else
-			{
-				DLC->Checked=false;
-			}
+		// Filling up a list of browsers
+		Browser->Items->Clear();
+		Activation_link->Text="Open activation link";
+		TSearchRec Rec;
+		Path = ExtractFileDir(Application->ExeName);
 
-			if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
-			{
-				Other->Checked=true;
-			}
-			else
-			{
-				Other->Checked=false;
-			}
-
-			if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
-			{
-				Already_used->Checked=true;
-			}
-			else
-			{
-				Already_used->Checked=false;
-			}
-		// Filling up table with list of keys
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-		TextSQL+=Game_name->Text;
-		TextSQL+="' ORDER BY Add_date ASC";
-		ADOQueryDBGrid->SQL->Clear();
-		ADOQueryDBGrid->SQL->Add(TextSQL);
-		ADOQueryDBGrid->Active=true;
-		Number_keys->Text=ADOQueryDBGrid->RecordCount;
-		// Filling up list of key's sources
-		TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-		ADOQueryListBox->SQL->Clear();
-		ADOQueryListBox->SQL->Add(TextSQL);
-		ADOQueryListBox->Active=true;
-		Source->Items->Clear();
-			for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-			{
-				Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
-				ADOQueryListBox->FindNext();
-			}
-		// Filling up games list
-		TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-		ADOQueryListBox->SQL->Clear();
-		ADOQueryListBox->SQL->Add(TextSQL);
-		ADOQueryListBox->Active=true;
-		GamesListBox->Items->Clear();
-		Game_name->Items->Clear();
-			for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-			{
-				GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-				Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-				ADOQueryListBox->FindNext();
-			}
-		// Set selected item in games list corresponding to game name field
-		int index = GamesListBox->Items->IndexOf(Game_name->Text);
-		if (index >= 0)
+			// Filling up a list of devices
+		switch (Device->ItemIndex)
 		{
-			GamesListBox->ItemIndex = index;
+			case 0:
+			Path = Path + "\\PC\\";
+			break;
+
+			case 1:
+			Path = Path + "\\Notebook\\";
+			break;
+
+			default:
+				;
 		}
-	Key_cache=Key_link->Text.Trim();
+
+			// Filling up a list of browsers
+		if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
+		{
+			do
+			{
+				Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
+				Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
+			}
+				while(FindNext(Rec) == 0);
+		}
+		FindClose(Rec);
+
+		// Disable some interface items and fill up test fields with messages if database is empty
+		if (ADOQuerySelect->RecordCount==0)
+		{
+			Number_keys->Text="0";
+			Add_date->DateTime.CurrentDateTime();
+			Key_link->Text="Enter a key or Indiegala link";
+			Game_name->Text="Enter a name of the game";
+			Source->Text="Enter source";
+			Notes->Text="You can write down some notes here. Delete this text for now :)";
+
+			KeySelect->Visible=false;
+			Game_select->Visible=false;
+			SortingBox->Visible=false;
+			Update_key->Enabled=false;
+			MainForm->Height=245;
+			MainForm->Width=663;
+			GaOpener->TabVisible=false;
+		}
+		// Selecting all keys and filling up lists sorted by date if DB is not empty
+		else
+		{
+			KeySelect->Visible=true;
+			Game_select->Visible=true;
+			SortingBox->Visible=true;
+			Update_key->Enabled=true;
+			MainForm->Height=555;
+			MainForm->Width=1123;
+			GaOpener->TabVisible=true;
+
+			TextSQL="SELECT * FROM Keys ORDER BY Add_date ASC";
+			ADOQuerySelect->SQL->Clear();
+			ADOQuerySelect->SQL->Add(TextSQL);
+			ADOQuerySelect->Active=true;
+			ADOQuerySelect->FindLast();
+			Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsString;
+			Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
+			Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
+			Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
+			Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
+				{
+					Trading_cards->Checked=true;
+				}
+				else
+				{
+					Trading_cards->Checked=false;
+				}
+
+				if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
+				{
+					DLC->Checked=true;
+				}
+				else
+				{
+					DLC->Checked=false;
+				}
+
+				if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
+				{
+					Other->Checked=true;
+				}
+				else
+				{
+					Other->Checked=false;
+				}
+
+				if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
+				{
+					Already_used->Checked=true;
+				}
+				else
+				{
+					Already_used->Checked=false;
+				}
+			// Filling up table with list of keys
+			TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+			TextSQL+=Game_name->Text;
+			TextSQL+="' ORDER BY Add_date ASC";
+			ADOQueryDBGrid->SQL->Clear();
+			ADOQueryDBGrid->SQL->Add(TextSQL);
+			ADOQueryDBGrid->Active=true;
+			Number_keys->Text=ADOQueryDBGrid->RecordCount;
+			// Filling up list of key's sources
+			TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+			ADOQueryListBox->SQL->Clear();
+			ADOQueryListBox->SQL->Add(TextSQL);
+			ADOQueryListBox->Active=true;
+			Source->Items->Clear();
+				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+				{
+					Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
+					ADOQueryListBox->FindNext();
+				}
+			// Filling up games list
+			TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+			ADOQueryListBox->SQL->Clear();
+			ADOQueryListBox->SQL->Add(TextSQL);
+			ADOQueryListBox->Active=true;
+			GamesListBox->Items->Clear();
+			Game_name->Items->Clear();
+				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
+				{
+					GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+					Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+					ADOQueryListBox->FindNext();
+				}
+			// Set selected item in games list corresponding to game name field
+			int index = GamesListBox->Items->IndexOf(Game_name->Text);
+			if (index >= 0)
+			{
+				GamesListBox->ItemIndex = index;
+			}
+		Key_cache=Key_link->Text.Trim();
+		}
+	}
+    catch(...)
+	{
+		ShowMessage(L"Database file SteamDB.mdb is not found!");
+		MainForm->Close();
 	}
 }
 
