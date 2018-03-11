@@ -260,7 +260,7 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 
 		if (Multiselection->Checked==false)
 		{
-			Clipboard()->AsText = ADOQuerySelect->FieldByName("Key_link")->AsString + " - " + ADOQuerySelect->FieldByName("Game_name")->AsString;
+			Clipboard()->AsText = ADOQuerySelect->FieldByName("Game_name")->AsString + "	" + ADOQuerySelect->FieldByName("Key_link")->AsString;
 		}
 		else
 		{
@@ -277,7 +277,7 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 			}
 			else
 			{
-				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Key_link")->AsString + " - " + ADOQuerySelect->FieldByName("Game_name")->AsString);
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + "	" + ADOQuerySelect->FieldByName("Key_link")->AsString);
 			}
 		}
 
