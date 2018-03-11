@@ -179,7 +179,6 @@ object MainForm: TMainForm
           Top = 14
           Width = 453
           Height = 229
-          AutoComplete = False
           AutoCompleteDelay = 1000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
