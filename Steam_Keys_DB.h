@@ -16,6 +16,8 @@
 #include <Buttons.hpp>
 #include <Tabs.hpp>
 #include <Vcl.WinXCalendars.hpp>
+#include "SHDocVw_OCX.h"
+#include <Vcl.OleCtrls.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
@@ -78,6 +80,8 @@ __published:	// IDE-managed Components
 	TTrayIcon *TrayIcon;
 	TButton *Form_hide;
 	TComboBox *Activation_link;
+	TCppWebBrowser *CppWebBrowser1;
+	TImage *Image1;
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall DBGridKeys_listCellClick(TColumn *Column);
 	void __fastcall GamesListBoxClick(TObject *Sender);
