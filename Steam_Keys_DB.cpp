@@ -277,7 +277,7 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 			}
 			else
 			{
-				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + "	" + ADOQuerySelect->FieldByName("Key_link")->AsString);
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + " - " + ADOQuerySelect->FieldByName("Key_link")->AsString);
 			}
 		}
 
