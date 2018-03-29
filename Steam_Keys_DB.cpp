@@ -44,6 +44,10 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 		Copy_buffer->Enabled=false;
 		Only_keys->Visible=false;
 		Only_keys->Checked=false;
+		BGR->Visible=false;
+		BGR->Checked=false;
+		Trade->Visible=false;
+		Trade->Checked=false;
 		Multiselection->Left=548;
 		Multiselection->Top=23;
 		Key_link->MaxLength=71;
@@ -275,9 +279,13 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 					Key_buffer->Lines->Text=Key_buffer->Lines->Text.Trim() + "," + ADOQuerySelect->FieldByName("Key_link")->AsString;
 				}
 			}
-			else
+			if (BGR->Checked==true)
 			{
-				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + " - " + ADOQuerySelect->FieldByName("Key_link")->AsString);
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + "\t" + ADOQuerySelect->FieldByName("Key_link")->AsString);
+			}
+			if (Trade->Checked==true)
+			{
+			Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + " - t" + ADOQuerySelect->FieldByName("Key_link")->AsString);
 			}
 		}
 
@@ -953,6 +961,8 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 		Key_buffer->Height=182;
 		Key_buffer->Width=645;
 		Only_keys->Visible=true;
+		BGR->Visible=true;
+		Trade->Visible=true;
 		Multiselection->Top=36;
 		Only_keys->Top=13;
 		Only_keys->Left=548;
@@ -964,6 +974,10 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 		Copy_buffer->Enabled=false;
 		Only_keys->Visible=false;
 		Only_keys->Checked=false;
+		BGR->Visible=false;
+		BGR->Checked=false;
+		Trade->Visible=false;
+		Trade->Checked=false;
 		Multiselection->Top=23;
 	}
 	Delete_key->Enabled=false;
@@ -1264,3 +1278,54 @@ void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
+void __fastcall TMainForm::Only_keysClick(TObject *Sender)
+{
+	if (Only_keys->Checked==true)
+	{
+		BGR->Enabled=false;
+		Trade->Enabled=false;
+		BGR->Checked=false;
+		Trade->Checked=false;
+	}
+	else
+	{
+		Trade->Enabled=true;
+		BGR->Enabled=true;
+    }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::BGRClick(TObject *Sender)
+{
+if (BGR->Checked==true)
+	{
+		Trade->Enabled=false;
+		Trade->Checked=false;
+		Only_keys->Enabled=false;
+		Only_keys->Checked=false;
+	}
+	else
+	{
+		Trade->Enabled=true;
+		Only_keys->Enabled=true;
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::TradeClick(TObject *Sender)
+{
+if (Trade->Checked==true)
+	{
+		BGR->Enabled=false;
+		Only_keys->Enabled=false;
+		BGR->Checked=false;
+		Only_keys->Checked=false;
+	}
+	else
+	{
+		Only_keys->Enabled=true;
+		BGR->Enabled=true;
+	}
+}
+//---------------------------------------------------------------------------
+

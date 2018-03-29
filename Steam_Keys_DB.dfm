@@ -59,9 +59,9 @@ object MainForm: TMainForm
           OnClick = MultiselectionClick
         end
         object Copy_buffer: TButton
-          Left = 482
+          Left = 455
           Top = 19
-          Width = 61
+          Width = 42
           Height = 26
           Caption = 'Copy'
           Font.Charset = DEFAULT_CHARSET
@@ -86,6 +86,7 @@ object MainForm: TMainForm
           Font.Style = []
           ParentFont = False
           TabOrder = 2
+          OnClick = Only_keysClick
         end
         object SortBox: TComboBox
           Left = 3
@@ -116,7 +117,7 @@ object MainForm: TMainForm
         object Delete_key: TBitBtn
           Left = 373
           Top = 19
-          Width = 103
+          Width = 76
           Height = 26
           Caption = 'Delete key'
           Font.Charset = RUSSIAN_CHARSET
@@ -148,6 +149,36 @@ object MainForm: TMainForm
           ParentFont = False
           TabOrder = 5
           OnClick = SortGroupClick
+        end
+        object BGR: TCheckBox
+          Left = 503
+          Top = 36
+          Width = 40
+          Height = 17
+          Caption = 'BGR'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 6
+          OnClick = BGRClick
+        end
+        object Trade: TCheckBox
+          Left = 503
+          Top = 13
+          Width = 40
+          Height = 17
+          Caption = 'Tr'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 7
+          OnClick = TradeClick
         end
       end
       object Key_buffer: TMemo

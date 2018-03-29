@@ -81,6 +81,8 @@ __published:	// IDE-managed Components
 	TButton *Form_hide;
 	TComboBox *Activation_link;
 	TCppWebBrowser *CppWebBrowser1;
+	TCheckBox *BGR;
+	TCheckBox *Trade;
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall DBGridKeys_listCellClick(TColumn *Column);
 	void __fastcall GamesListBoxClick(TObject *Sender);
@@ -111,6 +113,9 @@ __published:	// IDE-managed Components
 	void __fastcall FormHide(TObject *Sender);
 	void __fastcall Form_hideClick(TObject *Sender);
 	void __fastcall Activation_link_Change(TObject *Sender);
+	void __fastcall Only_keysClick(TObject *Sender);
+	void __fastcall BGRClick(TObject *Sender);
+	void __fastcall TradeClick(TObject *Sender);
 
 private:	// User declarations
 public:		// User declarations
