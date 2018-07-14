@@ -18,6 +18,7 @@
 #include <Vcl.WinXCalendars.hpp>
 #include "SHDocVw_OCX.h"
 #include <Vcl.OleCtrls.hpp>
+#include <Vcl.Menus.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
@@ -80,7 +81,6 @@ __published:	// IDE-managed Components
 	TTrayIcon *TrayIcon;
 	TButton *Form_hide;
 	TComboBox *Activation_link;
-	TCppWebBrowser *CppWebBrowser1;
 	TCheckBox *BGR;
 	TCheckBox *Trade;
 	void __fastcall FormShow(TObject *Sender);

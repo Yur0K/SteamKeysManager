@@ -4,8 +4,8 @@ object MainForm: TMainForm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'caption'
-  ClientHeight = 526
-  ClientWidth = 1131
+  ClientHeight = 528
+  ClientWidth = 1128
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -565,11 +565,13 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
+      ExplicitLeft = 8
+      ExplicitTop = 28
       object Links_list: TListBox
         Left = 0
         Top = 35
         Width = 377
-        Height = 230
+        Height = 463
         AutoComplete = False
         ItemHeight = 13
         TabOrder = 0
@@ -605,14 +607,14 @@ object MainForm: TMainForm
         Left = 383
         Top = 35
         Width = 377
-        Height = 230
+        Height = 463
         AutoComplete = False
         ItemHeight = 13
         TabOrder = 4
       end
       object Open_groups: TButton
         Left = 1050
-        Top = 219
+        Top = 452
         Width = 58
         Height = 46
         Caption = 'Groups'
@@ -630,7 +632,7 @@ object MainForm: TMainForm
       end
       object Open_group: TButton
         Left = 1050
-        Top = 167
+        Top = 400
         Width = 58
         Height = 46
         Caption = 'Group'
@@ -641,7 +643,7 @@ object MainForm: TMainForm
         Left = 815
         Top = 35
         Width = 229
-        Height = 230
+        Height = 463
         AutoComplete = False
         ItemHeight = 13
         TabOrder = 8
@@ -650,8 +652,8 @@ object MainForm: TMainForm
         Left = 766
         Top = 3
         Width = 43
-        Height = 262
-        Caption = 'Dev'
+        Height = 495
+        Caption = 'Device'
         Items.Strings = (
           'PC'
           'NB')
@@ -690,93 +692,80 @@ object MainForm: TMainForm
       end
       object Form_StayOnTop: TButton
         Left = 815
-        Top = 0
-        Width = 81
+        Top = 3
+        Width = 58
         Height = 29
-        Caption = 'Stay On Top'
+        Caption = 'On Top'
         TabOrder = 12
         OnClick = Form_StayOnTopClick
       end
       object Form_Normal: TButton
-        Left = 928
-        Top = 0
-        Width = 75
+        Left = 898
+        Top = 3
+        Width = 58
         Height = 29
         Caption = 'Normal'
         TabOrder = 13
         OnClick = Form_NormalClick
       end
       object Form_hide: TButton
-        Left = 1033
-        Top = 0
-        Width = 75
+        Left = 986
+        Top = 3
+        Width = 58
         Height = 29
         Caption = 'Hide'
         TabOrder = 14
         OnClick = Form_hideClick
-      end
-      object CppWebBrowser1: TCppWebBrowser
-        Left = 56
-        Top = 344
-        Width = 249
-        Height = 106
-        TabOrder = 15
-        ControlData = {
-          4C000000BC190000F50A00000000000000000000000000000000000000000000
-          000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E126208000000000000004C0000000114020000000000C000000000000046
-          8000000000000000000000000000000000000000000000000000000000000000
-          00000000000000000100000000000000000000000000000000000000}
       end
     end
   end
   object ADOConnection: TADOConnection
     LoginPrompt = False
     Provider = 'Microsoft.Jet.OLEDB.4.0'
-    Left = 824
-    Top = 360
+    Left = 840
+    Top = 432
   end
   object DataSourceDBGrid: TDataSource
     DataSet = ADOQueryDBGrid
-    Left = 1056
-    Top = 408
+    Left = 904
+    Top = 480
   end
   object ADOQueryDBGrid: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 1048
-    Top = 328
+    Left = 1000
+    Top = 432
   end
   object ADOQueryListBox: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 896
-    Top = 360
+    Left = 904
+    Top = 432
   end
   object ADOQuerySelect: TADOQuery
     Connection = ADOConnection
     Parameters = <>
     Left = 968
-    Top = 360
+    Top = 432
   end
   object ADOQueryDelete: TADOQuery
     Connection = ADOConnection
     Parameters = <>
     Left = 936
-    Top = 360
+    Top = 432
   end
   object Timer: TTimer
     Enabled = False
     Interval = 5000
     OnTimer = TimerTimer
-    Left = 976
-    Top = 416
+    Left = 872
+    Top = 480
   end
   object ADOQueryUpdate: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 856
-    Top = 360
+    Left = 872
+    Top = 432
   end
   object TrayIcon: TTrayIcon
     Icon.Data = {
@@ -5567,7 +5556,7 @@ object MainForm: TMainForm
       000000000000000000000000000000000000F80F0000FC0F0000FF9F0000FFFF
       0000FFFF0000}
     OnClick = TrayIconClick
-    Left = 512
-    Top = 400
+    Left = 841
+    Top = 480
   end
 end
