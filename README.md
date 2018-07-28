@@ -7,4 +7,4 @@ Software allows you to store and manage your keys and Indiegala links
 * Use of additional comments 
 * Sorting by date, number of keys (links) in database or key source
 * Creating a list of keys (for a trade, for example)
-* Creating a list of keys to redeem in ArchiSteamFarm
+* Creating a list of keys to redeem in ArchiSteamFarm's BGR
