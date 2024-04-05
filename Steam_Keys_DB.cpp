@@ -1160,29 +1160,6 @@ void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Add_groupClick(TObject *Sender)
-{
-	Groups_list->Items->Add(Clipboard()->AsText);
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
-{
-	if (Groups_list->ItemIndex!=-1)
-	{
-		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
-
-		for (Groups_list->ItemIndex = 0; Groups_list->ItemIndex < Groups_list->Items->Count-1; Groups_list->ItemIndex++)
-		{
-			URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
-			ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-		}
-		URL=Groups_list->Items->Strings[Groups_list->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-	}
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TMainForm::Add_linkClick(TObject *Sender)
 {
 	Links_list->Items->Add(Clipboard()->AsText);
@@ -1202,18 +1179,6 @@ void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 		URL=Links_list->Items->Strings[Links_list->ItemIndex];
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Open_groupClick(TObject *Sender)
-{
-	if (Groups_list->ItemIndex!=-1)
-	{
-		URL = Groups_list->Items->Strings[Groups_list->ItemIndex];
-		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-	}
-
 }
 //---------------------------------------------------------------------------
 
@@ -1245,12 +1210,6 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 		while(FindNext(Rec) == 0);
 	}
 	FindClose(Rec);
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Delete_groupClick(TObject *Sender)
-{
-	Groups_list->Items->Delete(Groups_list->ItemIndex);
 }
 //---------------------------------------------------------------------------
 

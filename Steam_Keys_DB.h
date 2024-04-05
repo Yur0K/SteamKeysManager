@@ -50,9 +50,6 @@ __published:	// IDE-managed Components
 	TListBox *Links_list;
 	TButton *Add_link;
 	TButton *Open_link;
-	TButton *Add_group;
-	TListBox *Groups_list;
-	TButton *Open_groups;
 	TGroupBox *Add_new_game;
 	TLabel *Game_nameLabel;
 	TLabel *Source_Label;
@@ -71,10 +68,8 @@ __published:	// IDE-managed Components
 	TButton *Update_key;
 	TTabSet *TabSet1;
 	TButton *Open_links;
-	TButton *Open_group;
 	TListBox *Browser;
 	TRadioGroup *Device;
-	TBitBtn *Delete_group;
 	TBitBtn *Delete_link;
 	TButton *Copy_from_clipboard;
 	TButton *Form_StayOnTop;
@@ -99,13 +94,9 @@ __published:	// IDE-managed Components
 	void __fastcall Key_linkClick(TObject *Sender);
 	void __fastcall SortGroupClick(TObject *Sender);
 	void __fastcall Open_linkClick(TObject *Sender);
-	void __fastcall Add_groupClick(TObject *Sender);
-	void __fastcall Open_groupsClick(TObject *Sender);
 	void __fastcall Add_linkClick(TObject *Sender);
 	void __fastcall Open_linksClick(TObject *Sender);
-	void __fastcall Open_groupClick(TObject *Sender);
 	void __fastcall DeviceClick(TObject *Sender);
-	void __fastcall Delete_groupClick(TObject *Sender);
 	void __fastcall Delete_linkClick(TObject *Sender);
 	void __fastcall Copy_from_clipboardClick(TObject *Sender);
 	void __fastcall Form_StayOnTopClick(TObject *Sender);
