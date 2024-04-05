@@ -741,7 +741,7 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
         // Reset specific properties and states when not checked
         Copy_buffer->Enabled = false;
         Only_keys->Checked = false;
-        BGR->Checked = false;
+		BGR->Checked = false;
         Trade->Checked = false;
         Multiselection->Top = 23;
     }
@@ -794,108 +794,79 @@ void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 	}
 }
 
-
 void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 {
-	switch (SortGroup->ItemIndex)
-	{
-		case 0:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys WHERE Trading_cards= True ORDER BY Add_date ASC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE Trading_cards = True GROUP BY Game_name";
-		TextSelect="SELECT * FROM Keys WHERE Trading_cards = True ORDER BY Add_date ASC";
-		break;
+    String filterColumn;
+    switch (SortGroup->ItemIndex)
+    {
+        case 0:
+            filterColumn = "Trading_cards";
+            break;
+        case 1:
+            filterColumn = "DLC";
+            break;
+        case 2:
+            filterColumn = "Other";
+            break;
+        case 3:
+            filterColumn = "Already_used";
+            break;
+        default:
+            return;
+    }
 
-		case 1:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys WHERE DLC = True ORDER BY Add_date ASC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE DLC = True GROUP BY Game_name";
-		TextSelect="SELECT * FROM Keys WHERE DLC = True ORDER BY Add_date ASC";
-		break;
+    String orderByClause = "ORDER BY Add_date ASC";
+    TextSQL = "SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys WHERE " + filterColumn + " = True " + orderByClause;
+    TextSQLList = "SELECT DISTINCT Game_name FROM Keys WHERE " + filterColumn + " = True ORDER BY Game_name";
+    TextSelect = "SELECT * FROM Keys WHERE " + filterColumn + " = True " + orderByClause;
 
-		case 2:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys WHERE Other = True ORDER BY Add_date ASC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE Other = True GROUP BY Game_name";
-		TextSelect="SELECT * FROM Keys WHERE Other = True ORDER BY Add_date ASC";
-		break;
+    // Set SQL queries for ADOQuerySelect
+    ADOQuerySelect->SQL->Clear();
+    ADOQuerySelect->SQL->Add(TextSelect);
+    ADOQuerySelect->Active = true;
 
-		case 3:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys WHERE Already_used = True ORDER BY Add_date ASC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE Already_used = True GROUP BY Game_name";
-		TextSelect="SELECT * FROM Keys WHERE Already_used = True ORDER BY Add_date ASC";
-		break;
+    // Populate fields with the first record from ADOQuerySelect
+    if (!ADOQuerySelect->Eof)
+    {
+        Add_date->DateTime = ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+        Key_link->Text = ADOQuerySelect->FieldByName("Key_link")->AsString;
+        Game_name->Text = ADOQuerySelect->FieldByName("Game_name")->AsString;
+        Source->Text = ADOQuerySelect->FieldByName("Source")->AsString;
+        Notes->Text = ADOQuerySelect->FieldByName("Notes")->AsString;
+        Trading_cards->Checked = ADOQuerySelect->FieldByName("Trading_cards")->AsBoolean;
+        DLC->Checked = ADOQuerySelect->FieldByName("DLC")->AsBoolean;
+        Other->Checked = ADOQuerySelect->FieldByName("Other")->AsBoolean;
+        Already_used->Checked = ADOQuerySelect->FieldByName("Already_used")->AsBoolean;
+    }
 
-		default:
-			;
-	}
+    // Set SQL queries for ADOQueryDBGrid and ADOQueryListBox
+    ADOQueryDBGrid->SQL->Clear();
+    ADOQueryDBGrid->SQL->Add(TextSQL);
+    ADOQueryDBGrid->Active = true;
 
-	ADOQuerySelect->SQL->Clear();
-	ADOQuerySelect->SQL->Add(TextSelect);
-	ADOQuerySelect->Active=true;
-	ADOQuerySelect->FindFirst();
-	Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
-	Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-	Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-	Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-	Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-	if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
-	{
-		Trading_cards->Checked=true;
-	}
-	else
-	{
-		Trading_cards->Checked=false;
-	}
+    ADOQueryListBox->SQL->Clear();
+    ADOQueryListBox->SQL->Add(TextSQLList);
+    ADOQueryListBox->Active = true;
 
-	if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
-	{
-		DLC->Checked=true; }
-	else
-	{
-		DLC->Checked=false;
-	}
+    // Populate GamesListBox with unique game names
+    GamesListBox->Items->Clear();
+    ADOQueryListBox->First(); // Move to the first record before the loop
+    while (!ADOQueryListBox->Eof)
+    {
+        GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+        ADOQueryListBox->Next();
+    }
 
-	if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
-	{
-		Other->Checked=true;
-	}
-	else
-	{
-		Other->Checked=false;
-	}
+    // Set selected item in GamesListBox corresponding to game name field
+    int index = GamesListBox->Items->IndexOf(Game_name->Text);
+    if (index >= 0)
+    {
+        GamesListBox->ItemIndex = index;
+    }
 
-	if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
-	{
-		Already_used->Checked=true;
-	}
-	else
-	{
-		Already_used->Checked=false;
-	}
-
-	ADOQueryDBGrid->SQL->Clear();
-	ADOQueryDBGrid->SQL->Add(TextSQL);
-	ADOQueryDBGrid->Active=true;
-
-	ADOQueryListBox->SQL->Clear();
-	ADOQueryListBox->SQL->Add(TextSQLList);
-	ADOQueryListBox->Active=true;
-
-	GamesListBox->Items->Clear();
-
-	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-	{
-		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-		ADOQueryListBox->FindNext();
-	}
-	// Set selected item in games list corresponding to game name field
-	int index = GamesListBox->Items->IndexOf(Game_name->Text);
-	if (index >= 0)
-	{
-		GamesListBox->ItemIndex = index;
-	}
-
-Number_keys->Text=ADOQueryDBGrid->RecordCount;
-Delete_key->Enabled=false;
-Key_cache=Key_link->Text.Trim();
+    Number_keys->Text = IntToStr(ADOQueryDBGrid->RecordCount);
+    Delete_key->Enabled = false;
+    Key_cache = Key_link->Text.Trim();
 }
 
 
