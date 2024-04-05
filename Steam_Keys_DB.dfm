@@ -113,11 +113,11 @@ object MainForm: TMainForm
             'Quantity+Name'#8595)
         end
         object Delete_key: TBitBtn
-          Left = 359
+          Left = 362
           Top = 19
-          Width = 97
+          Width = 90
           Height = 28
-          Caption = 'KEY DELETED'
+          Caption = 'Delete key'
           Font.Charset = RUSSIAN_CHARSET
           Font.Color = clRed
           Font.Height = -13

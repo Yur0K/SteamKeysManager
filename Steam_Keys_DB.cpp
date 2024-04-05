@@ -1,5 +1,5 @@
 // Author: Yuriy Tyutyunnik
-// Date: 2/5/2018
+// Date: 05.04.2024
 
 
 #include <vcl.h>
@@ -19,7 +19,9 @@ AnsiString URL, BOT, Path;
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TForm(Owner)
 {
+
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
@@ -211,6 +213,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 		MainForm->Close();
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 {
@@ -285,7 +288,7 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 			}
 			if (Trade->Checked==true)
 			{
-			Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + " - " + ADOQuerySelect->FieldByName("Key_link")->AsString);
+				Key_buffer->Lines->Add(ADOQuerySelect->FieldByName("Game_name")->AsString + " - " + ADOQuerySelect->FieldByName("Key_link")->AsString);
 			}
 		}
 
@@ -316,6 +319,7 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 		Game_name->Text="Click on a key or link";
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 {
@@ -379,6 +383,7 @@ void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 	Delete_key->Enabled=false;
 	Key_cache=Key_link->Text.Trim();
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 {
@@ -394,7 +399,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 
 		Timer->Enabled=true;
 		KeySelect->Color=clLime;
-		Delete_key->Caption="KEY DELETED";
+		Delete_key->Caption="DELETED";
 		Delete_key->Enabled=false;
 
 		TextSQL="SELECT * FROM Keys";
@@ -734,6 +739,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 	Number_keys->Text=ADOQueryDBGrid->RecordCount;
 	Key_cache=Key_link->Text.Trim();
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TimerTimer(TObject *Sender)
 {
@@ -875,6 +881,7 @@ void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 	}
 	Key_cache=Key_link->Text.Trim();
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 {
@@ -948,6 +955,7 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 	Delete_key->Enabled=false;
 	Key_cache=Key_link->Text.Trim();
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 {
@@ -982,6 +990,7 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 	}
 	Delete_key->Enabled=false;
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 {
@@ -993,11 +1002,12 @@ void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 	else
 	{
 		SortingBox->Color=clLime;
-		Copy_buffer->Caption="Copied";
+		Copy_buffer->Caption="DONE";
 		Timer->Enabled=true;
 		Clipboard()->AsText = Key_buffer->Text.Trim();
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 {
@@ -1006,6 +1016,7 @@ void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 		Add_Key_ButtonClick(Sender);
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 {
@@ -1014,6 +1025,7 @@ void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 		Add_Key_ButtonClick(Sender);
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 {
@@ -1027,6 +1039,7 @@ void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 		Key_link->SetFocus();
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 {
@@ -1131,7 +1144,9 @@ Delete_key->Enabled=false;
 Key_cache=Key_link->Text.Trim();
 }
 
+
 //--------------- GA OPENER ------------------------------
+
 
 void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 {
@@ -1143,11 +1158,13 @@ void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 	}
 
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Add_groupClick(TObject *Sender)
 {
 	Groups_list->Items->Add(Clipboard()->AsText);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
 {
@@ -1164,11 +1181,13 @@ void __fastcall TMainForm::Open_groupsClick(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Add_linkClick(TObject *Sender)
 {
 	Links_list->Items->Add(Clipboard()->AsText);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 {
@@ -1184,6 +1203,7 @@ void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 {
@@ -1195,6 +1215,7 @@ void __fastcall TMainForm::Open_groupClick(TObject *Sender)
 	}
 
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::DeviceClick(TObject *Sender)
 {
@@ -1225,49 +1246,58 @@ void __fastcall TMainForm::DeviceClick(TObject *Sender)
 	}
 	FindClose(Rec);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_groupClick(TObject *Sender)
 {
 	Groups_list->Items->Delete(Groups_list->ItemIndex);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_linkClick(TObject *Sender)
 {
 	Links_list->Items->Delete(Links_list->ItemIndex);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
 {
 	Key_link->Text=Clipboard()->AsText;
 	Add_Key_ButtonClick(Sender);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_StayOnTopClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsStayOnTop;
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_NormalClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsNormal;
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TrayIconClick(TObject *Sender)
 {
 	TrayIcon->Visible=false;
 	ShowWindow(MainForm->Handle, SW_SHOW);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormHide(TObject *Sender)
 {
 	TrayIcon->Visible=true;
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
+//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
 {
@@ -1278,6 +1308,8 @@ void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 }
+//---------------------------------------------------------------------------
+
 void __fastcall TMainForm::Only_keysClick(TObject *Sender)
 {
 	if (Only_keys->Checked==true)
