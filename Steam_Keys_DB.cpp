@@ -251,67 +251,35 @@ void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 
 void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 {
-	TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-	TextSQL+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-	TextSQL+="' ORDER BY Add_date";
-	ADOQueryDBGrid->SQL->Clear();
-	ADOQueryDBGrid->SQL->Add(TextSQL);
-	ADOQueryDBGrid->Active=true;
-	Number_keys->Text=ADOQueryDBGrid->RecordCount;
+    TextSQL = "SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
+    TextSQL += GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+    TextSQL += "' ORDER BY Add_date";
+    ADOQueryDBGrid->SQL->Clear();
+    ADOQueryDBGrid->SQL->Add(TextSQL);
+    ADOQueryDBGrid->Active = true;
+    Number_keys->Text = IntToStr(ADOQueryDBGrid->RecordCount);
 
-	TextSelect="SELECT * FROM Keys WHERE Game_name='";
-	TextSelect+=GamesListBox->Items->Strings[GamesListBox->ItemIndex];
-	TextSelect+=" ' ORDER BY Add_date";
-	ADOQuerySelect->SQL->Clear();
-	ADOQuerySelect->SQL->Add(TextSelect);
-	ADOQuerySelect->Active=true;
-	ADOQuerySelect->FindFirst();
-	Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
-	Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-	Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-	Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-	Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
+    TextSelect = "SELECT * FROM Keys WHERE Game_name='";
+    TextSelect += GamesListBox->Items->Strings[GamesListBox->ItemIndex];
+    TextSelect += "' ORDER BY Add_date";
+    ADOQuerySelect->SQL->Clear();
+    ADOQuerySelect->SQL->Add(TextSelect);
+    ADOQuerySelect->Active = true;
+    ADOQuerySelect->FindFirst();
+    Add_date->DateTime = ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+    Key_link->Text = ADOQuerySelect->FieldByName("Key_link")->AsString;
+    Game_name->Text = ADOQuerySelect->FieldByName("Game_name")->AsString;
+    Source->Text = ADOQuerySelect->FieldByName("Source")->AsString;
+    Notes->Text = ADOQuerySelect->FieldByName("Notes")->AsString;
 
-	if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
-	{
-		Trading_cards->Checked=true;
-	}
-	else
-	{
-		Trading_cards->Checked=false;
-	}
+    Trading_cards->Checked = ADOQuerySelect->FieldByName("Trading_cards")->AsBoolean;
+    DLC->Checked = ADOQuerySelect->FieldByName("DLC")->AsBoolean;
+    Other->Checked = ADOQuerySelect->FieldByName("Other")->AsBoolean;
+    Already_used->Checked = ADOQuerySelect->FieldByName("Already_used")->AsBoolean;
 
-	if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
-	{
-		DLC->Checked=true;
-	}
-	else
-	{
-		DLC->Checked=false;
-	}
-
-	if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
-	{
-		Other->Checked=true;
-	}
-	else
-	{
-		Other->Checked=false;
-	}
-
-	if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
-	{
-		Already_used->Checked=true;
-	}
-	else
-	{
-		Already_used->Checked=false;
-	}
-
-	Delete_key->Enabled=false;
-	Key_cache=Key_link->Text.Trim();
+    Delete_key->Enabled = false;
+    Key_cache = Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 {
