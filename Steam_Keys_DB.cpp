@@ -558,132 +558,79 @@ void __fastcall TMainForm::TimerTimer(TObject *Sender)
 
 void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 {
-	Delete_key->Enabled=false;
+    Delete_key->Enabled = false;
 
-	if(Key_link->Text.IsEmpty()||Game_name->Text.IsEmpty()||Source->Text.IsEmpty())
-	{
-		Update_key->Caption="SOME FIELDS ARE EMPTY";
-		Add_new_game->Color=clYellow;
-		Timer->Enabled=true;
-	}
-	else
-	{
-		TextUpdate="UPDATE Keys SET Add_date='";
-		TextUpdate+=Add_date->DateTime.DateTimeString();
-		TextUpdate+="', Key_link='";
-		TextUpdate+=Key_link->Text.Trim();
-		TextUpdate+="', Game_name='";
-		TextUpdate+=Game_name->Text.Trim();
-		TextUpdate+="', Source='";
-		TextUpdate+=Source->Text.Trim();
-		TextUpdate+="', Notes='";
-		TextUpdate+=Notes->Text.Trim();
-		TextUpdate+="', Trading_cards='";
-		if(Trading_cards->Checked==true)
-		{
-			TextUpdate+=1;
-		}
-		else
-		{
-			TextUpdate+=0;
-		}
-		TextUpdate+="', DLC='";
-		if(DLC->Checked==true)
-		{
-			TextUpdate+=1;
-		}
-		else
-		{
-			TextUpdate+=0;
-		}
-		TextUpdate+="', Other='";
-		if(Other->Checked==true)
-		{
-			TextUpdate+=1;
-		}
-		else
-		{
-			TextUpdate+=0;
-		}
-		TextUpdate+="', Already_used='";
-		if(Already_used->Checked==true)
-		{
-			TextUpdate+=1;
-		}
-		else
-		{
-			TextUpdate+=0;
-		}
-		TextUpdate+="'";
-		TextUpdate+=" WHERE Key_link='";
-		TextUpdate+=Key_cache;
-		TextUpdate+=" ' ";
-			try
-			{
-				ADOQueryUpdate->Active=false;
-				ADOQueryUpdate->SQL->Clear();
-				ADOQueryUpdate->SQL->Add(TextUpdate);
-				ADOQueryUpdate->ExecSQL();
+    if (Key_link->Text.IsEmpty() || Game_name->Text.IsEmpty() || Source->Text.IsEmpty())
+    {
+        Update_key->Caption = "SOME FIELDS ARE EMPTY";
+        Add_new_game->Color = clYellow;
+        Timer->Enabled = true;
+    }
+    else
+    {
+        String TextUpdate = "UPDATE Keys SET Add_date='" + Add_date->DateTime.DateTimeString() +
+                            "', Key_link='" + Key_link->Text.Trim() +
+                            "', Game_name='" + Game_name->Text.Trim() +
+                            "', Source='" + Source->Text.Trim() +
+                            "', Notes='" + Notes->Text.Trim() +
+                            "', Trading_cards='" + (Trading_cards->Checked ? "1" : "0") +
+                            "', DLC='" + (DLC->Checked ? "1" : "0") +
+                            "', Other='" + (Other->Checked ? "1" : "0") +
+                            "', Already_used='" + (Already_used->Checked ? "1" : "0") +
+                            "' WHERE Key_link='" + Key_cache + "'";
 
-				Update_key->Caption="INFO UPDATED";
-				Add_new_game->Color=clLime;
-				Timer->Enabled=true;
+        try
+        {
+            ADOQueryUpdate->Active = false;
+            ADOQueryUpdate->SQL->Text = TextUpdate;
+            ADOQueryUpdate->ExecSQL();
 
-				GamesListBox->Items->Clear();
-				Source->Items->Clear();
-				Game_name->Items->Clear();
+            Update_key->Caption = "INFO UPDATED";
+            Add_new_game->Color = clLime;
+            Timer->Enabled = true;
 
-				TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-				TextSQL+=Game_name->Text;
-				TextSQL+="' ORDER BY Add_date ASC";
-				ADOQueryDBGrid->SQL->Clear();
-				ADOQueryDBGrid->SQL->Add(TextSQL);
-				ADOQueryDBGrid->Active=true;
-				Number_keys->Text=ADOQueryDBGrid->RecordCount;
+            // Refresh List Boxes and UI
+            ADOQueryDBGrid->SQL->Text = "SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='" + Game_name->Text + "' ORDER BY Add_date ASC";
+            ADOQueryDBGrid->Active = true;
+            Number_keys->Text = IntToStr(ADOQueryDBGrid->RecordCount);
 
-				TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-				ADOQueryListBox->SQL->Clear();
-				ADOQueryListBox->SQL->Add(TextSQL);
-				ADOQueryListBox->Active=true;
-				Source->Items->Clear();
+            ADOQueryListBox->SQL->Text = "SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+            ADOQueryListBox->Active = true;
+            Source->Items->Clear();
+            while (!ADOQueryListBox->Eof)
+            {
+                Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
+                ADOQueryListBox->Next();
+            }
 
-				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-				{
-					Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
-					ADOQueryListBox->FindNext();
-				}
+            ADOQueryListBox->SQL->Text = "SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+            ADOQueryListBox->Active = true;
+            Game_name->Items->Clear();
+            GamesListBox->Items->Clear();
+            while (!ADOQueryListBox->Eof)
+            {
+                String gameName = ADOQueryListBox->FieldByName("Game_name")->AsString;
+                GamesListBox->Items->Add(gameName);
+                Game_name->Items->Add(gameName);
+                ADOQueryListBox->Next();
+            }
 
-				TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-				ADOQueryListBox->SQL->Clear();
-				ADOQueryListBox->SQL->Add(TextSQL);
-				ADOQueryListBox->Active=true;
-				GamesListBox->Items->Clear();
-				Game_name->Items->Clear();
-
-				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-				{
-					GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-					Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-					ADOQueryListBox->FindNext();
-				}
-
-				// Set selected item in games list corresponding to game name field
-			   	int index = GamesListBox->Items->IndexOf(Game_name->Text);
-			   	if (index >= 0)
-			   	{
-					GamesListBox->ItemIndex = index;
-			   	}
-			}
-		catch (...)
-		{
-			Update_key->Caption="ERROR";
-			Add_new_game->Color=clRed;
-			Timer->Enabled=true;
-		}
-	}
-	Key_cache=Key_link->Text.Trim();
+            // Set selected item in games list corresponding to game name field
+            int index = GamesListBox->Items->IndexOf(Game_name->Text);
+            if (index != -1)
+            {
+                GamesListBox->ItemIndex = index;
+            }
+        }
+        catch (...)
+        {
+            Update_key->Caption = "ERROR";
+            Add_new_game->Color = clRed;
+            Timer->Enabled = true;
+        }
+    }
+    Key_cache = Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 {
