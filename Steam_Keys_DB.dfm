@@ -12,11 +12,9 @@ object MainForm: TMainForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poDesigned
   OnHide = FormHide
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     Left = 0
@@ -59,10 +57,10 @@ object MainForm: TMainForm
           OnClick = MultiselectionClick
         end
         object Copy_buffer: TButton
-          Left = 455
+          Left = 458
           Top = 19
           Width = 42
-          Height = 26
+          Height = 28
           Caption = 'Copy'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -115,11 +113,11 @@ object MainForm: TMainForm
             'Quantity+Name'#8595)
         end
         object Delete_key: TBitBtn
-          Left = 373
+          Left = 359
           Top = 19
-          Width = 76
-          Height = 26
-          Caption = 'Delete key'
+          Width = 97
+          Height = 28
+          Caption = 'KEY DELETED'
           Font.Charset = RUSSIAN_CHARSET
           Font.Color = clRed
           Font.Height = -13
@@ -132,7 +130,7 @@ object MainForm: TMainForm
         object SortGroup: TRadioGroup
           Left = 138
           Top = 9
-          Width = 229
+          Width = 218
           Height = 48
           Caption = 'Filter'
           Columns = 2
@@ -144,7 +142,7 @@ object MainForm: TMainForm
           Items.Strings = (
             'TCs'
             'DLC'
-            'Alpha, beta, other'
+            'Alpha\beta, other'
             'Used')
           ParentFont = False
           TabOrder = 5
@@ -338,7 +336,7 @@ object MainForm: TMainForm
           Width = 444
           Height = 24
           EditLabel.Width = 99
-          EditLabel.Height = 16
+          EditLabel.Height = 24
           EditLabel.Caption = 'Steam key or link'
           EditLabel.Font.Charset = DEFAULT_CHARSET
           EditLabel.Font.Color = clWindowText
@@ -354,6 +352,7 @@ object MainForm: TMainForm
           LabelPosition = lpLeft
           ParentFont = False
           TabOrder = 2
+          Text = ''
           OnClick = Key_linkClick
           OnKeyPress = Key_linkKeyPress
         end
@@ -374,7 +373,7 @@ object MainForm: TMainForm
           Left = 166
           Top = 103
           Width = 137
-          Height = 17
+          Height = 21
           Alignment = taLeftJustify
           Caption = 'Alpha, Beta or Other'
           Font.Charset = DEFAULT_CHARSET
@@ -389,7 +388,7 @@ object MainForm: TMainForm
           Left = 25
           Top = 103
           Width = 97
-          Height = 17
+          Height = 21
           Alignment = taLeftJustify
           Caption = 'Trading cards'
           Font.Charset = DEFAULT_CHARSET
@@ -450,9 +449,9 @@ object MainForm: TMainForm
           Top = 13
           Width = 140
           Height = 24
-          Date = 42578.708157638890000000
+          Date = 42578.000000000000000000
           Format = 'dd.MM.yyyy HH:mm:ss'
-          Time = 42578.708157638890000000
+          Time = 0.708157638888224000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -481,7 +480,7 @@ object MainForm: TMainForm
           Height = 24
           Ctl3D = True
           EditLabel.Width = 89
-          EditLabel.Height = 16
+          EditLabel.Height = 24
           EditLabel.BiDiMode = bdLeftToRight
           EditLabel.Caption = 'Number of keys'
           EditLabel.Font.Charset = DEFAULT_CHARSET
@@ -565,8 +564,6 @@ object MainForm: TMainForm
     object GaOpener: TTabSheet
       Caption = 'GaOpener'
       ImageIndex = 1
-      ExplicitLeft = 8
-      ExplicitTop = 28
       object Links_list: TListBox
         Left = 0
         Top = 35
