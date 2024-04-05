@@ -634,77 +634,83 @@ void __fastcall TMainForm::Update_keyClick(TObject *Sender)
 
 void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 {
+	String orderByClause, groupByClause, orderByListClause;
+
 	switch (SortBox->ItemIndex)
 	{
-		case 0:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys ORDER BY Add_date ASC, Game_name ASC";
-		TextSQLList="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name ASC";
-		break;
-
-		case 1:
-		TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys ORDER BY Add_date DESC, Game_name DESC";
-		TextSQLList="SELECT Game_name FROM Keys GROUP BY Game_name, Add_date ORDER BY Add_date DESC";
-		break;
-
+        case 0:
+            orderByClause = "ORDER BY Add_date ASC, Game_name ASC";
+            orderByListClause = "ORDER BY MIN(Add_date) ASC"; // Сортування за мінімальною датою додавання
+            break;
+        case 1:
+            orderByClause = "ORDER BY Add_date DESC, Game_name DESC";
+            orderByListClause = "ORDER BY MIN(Add_date) DESC"; // Сортування за максимальною датою додавання
+			break;
 		case 2:
-		TextSQL="SELECT Count(*) AS [Quantity],  Game_name AS [Game name] FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Count(*) ASC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Count(*) ASC";
-		break;
-
+			orderByClause = "ORDER BY Count(*) ASC";
+			groupByClause = "GROUP BY Game_name";
+			orderByListClause = "ORDER BY Count(*) ASC";
+			break;
 		case 3:
-		TextSQL="SELECT Count(*) AS [Quantity],  Game_name AS [Game name] FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Count(*) DESC";
-		TextSQLList="SELECT Game_name FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Count(*) DESC";
-		break;
-
+			orderByClause = "ORDER BY Count(*) DESC";
+			groupByClause = "GROUP BY Game_name";
+			orderByListClause = "ORDER BY Count(*) DESC";
+			break;
 		case 4:
-		TextSQL="SELECT Add_date, Key_link, Game_name, Source FROM Keys ORDER BY Source ASC";
-		TextSQLList="SELECT Game_name FROM Keys GROUP BY Game_name,Source ORDER BY Source ASC";
-		break;
-
+			orderByClause = "ORDER BY Source ASC";
+			groupByClause = "GROUP BY Game_name, Source";
+			orderByListClause = "ORDER BY Source ASC";
+			break;
 		case 5:
-		TextSQL="SELECT Add_date, Key_link, Game_name, Source FROM Keys ORDER BY Source DESC, Game_name DESC";
-		TextSQLList="SELECT Game_name FROM Keys GROUP BY Game_name,Source ORDER BY Source DESC, Game_name DESC";
-		break;
-
+			orderByClause = "ORDER BY Source DESC, Game_name DESC";
+			groupByClause = "GROUP BY Game_name, Source";
+			orderByListClause = "ORDER BY Source DESC, Game_name DESC";
+			break;
 		case 6:
-		TextSQL="SELECT Count(*) AS [Quantity],  Game_name AS [Game name] FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Game_name ASC";
-		break;
+			orderByClause = "ORDER BY Game_name ASC";
+			groupByClause = "GROUP BY Game_name";
+			orderByListClause = "ORDER BY Game_name ASC";
+            break;
+        case 7:
+            orderByClause = "ORDER BY Game_name DESC";
+			groupByClause = "GROUP BY Game_name";
+            orderByListClause = "ORDER BY Game_name DESC";
+            break;
+        default:
+			return; // Вихід з функції, якщо не вдалося знайти відповідний випадок
+    }
 
-		case 7:
-		TextSQL="SELECT Count(*) AS [Quantity],  Game_name AS [Game name] FROM Keys WHERE Game_name=Game_name GROUP BY Game_name ORDER BY Game_name DESC";
-		break;
+	TextSQL = "SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys " + orderByClause;
+    // Оновлений запит для вибірки унікальних назв ігор з урахуванням дати
+    TextSQLList = "SELECT Game_name, MIN(Add_date) AS FirstAddedDate FROM Keys GROUP BY Game_name " + orderByListClause;
 
-		default:
-			;
-	}
+    ADOQueryDBGrid->SQL->Clear();
+    ADOQueryDBGrid->SQL->Add(TextSQL);
+    ADOQueryDBGrid->Active = true;
 
-	ADOQueryDBGrid->SQL->Clear();
-	ADOQueryDBGrid->SQL->Add(TextSQL);
-	ADOQueryDBGrid->Active=true;
+    ADOQueryListBox->SQL->Clear();
+    ADOQueryListBox->SQL->Add(TextSQLList);
+    ADOQueryListBox->Active = true;
 
-	ADOQueryListBox->SQL->Clear();
-	ADOQueryListBox->SQL->Add(TextSQLList);
-	ADOQueryListBox->Active=true;
+    GamesListBox->Items->Clear();
 
-	GamesListBox->Items->Clear();
+    while (!ADOQueryListBox->Eof)
+    {
+        GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+        ADOQueryListBox->Next();
+    }
 
-	for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-	{
-		GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-		ADOQueryListBox->FindNext();
-	}
-	// Set selected item in games list corresponding to game name field
-	int index = GamesListBox->Items->IndexOf(Game_name->Text);
-	if (index >= 0)
-	{
-		GamesListBox->ItemIndex = index;
-	}
+    // Встановлення вибраного елемента в списку ігор
+    int index = GamesListBox->Items->IndexOf(Game_name->Text);
+    if (index >= 0)
+    {
+        GamesListBox->ItemIndex = index;
+    }
 
-	Number_keys->Text=ADOQueryDBGrid->RecordCount;
-	Delete_key->Enabled=false;
-	Key_cache=Key_link->Text.Trim();
+    Number_keys->Text = IntToStr(ADOQueryDBGrid->RecordCount);
+    Delete_key->Enabled = false;
+    Key_cache = Key_link->Text.Trim();
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 {
