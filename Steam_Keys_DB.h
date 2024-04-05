@@ -19,6 +19,7 @@
 #include "SHDocVw_OCX.h"
 #include <Vcl.OleCtrls.hpp>
 #include <Vcl.Menus.hpp>
+#include <Vcl.Mask.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {

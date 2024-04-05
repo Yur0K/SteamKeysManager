@@ -115,8 +115,8 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 			Game_select->Visible=true;
 			SortingBox->Visible=true;
 			Update_key->Enabled=true;
-			MainForm->Height=555;
-			MainForm->Width=1123;
+			MainForm->Height=565;
+			MainForm->Width=1138;
 			GaOpener->TabVisible=true;
 
 			TextSQL="SELECT * FROM Keys ORDER BY Add_date ASC";
