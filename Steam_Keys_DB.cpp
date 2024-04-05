@@ -869,7 +869,90 @@ void __fastcall TMainForm::SortGroupClick(TObject *Sender)
     Key_cache = Key_link->Text.Trim();
 }
 
+void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
+{
+	Key_link->Text=Clipboard()->AsText;
+	Add_Key_ButtonClick(Sender);
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
+{
+    if (Activation_link->ItemIndex != -1)
+    {
+        UnicodeString URL = L"https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
+        UnicodeString BOT = Path + Activation_link->Items->Strings[Activation_link->ItemIndex];
+
+        ShellExecuteW(Handle, L"open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+    }
+}
+
+
+
+
+void __fastcall TMainForm::Only_keysClick(TObject *Sender)
+{
+	if (Only_keys->Checked==true)
+	{
+		BGR->Enabled=false;
+		Trade->Enabled=false;
+		BGR->Checked=false;
+		Trade->Checked=false;
+	}
+	else
+	{
+		Trade->Enabled=true;
+		BGR->Enabled=true;
+    }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::BGRClick(TObject *Sender)
+{
+if (BGR->Checked==true)
+	{
+		Trade->Enabled=false;
+		Trade->Checked=false;
+		Only_keys->Enabled=false;
+		Only_keys->Checked=false;
+	}
+	else
+	{
+		Trade->Enabled=true;
+		Only_keys->Enabled=true;
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::TradeClick(TObject *Sender)
+{
+if (Trade->Checked==true)
+	{
+		BGR->Enabled=false;
+		Only_keys->Enabled=false;
+		BGR->Checked=false;
+		Only_keys->Checked=false;
+	}
+	else
+	{
+		Only_keys->Enabled=true;
+		BGR->Enabled=true;
+	}
+}
+//---------------------------------------------------------------------------
 //--------------- GA OPENER ------------------------------
 
 
@@ -944,12 +1027,6 @@ void __fastcall TMainForm::Delete_linkClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
-{
-	Key_link->Text=Clipboard()->AsText;
-	Add_Key_ButtonClick(Sender);
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_StayOnTopClick(TObject *Sender)
 {
@@ -980,68 +1057,6 @@ void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
-{
-	if (Activation_link->ItemIndex!=-1)
-	{
-		URL="https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
-		BOT = Path + Activation_link->Items->Strings[Activation_link->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-	}
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Only_keysClick(TObject *Sender)
-{
-	if (Only_keys->Checked==true)
-	{
-		BGR->Enabled=false;
-		Trade->Enabled=false;
-		BGR->Checked=false;
-		Trade->Checked=false;
-	}
-	else
-	{
-		Trade->Enabled=true;
-		BGR->Enabled=true;
-    }
-
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::BGRClick(TObject *Sender)
-{
-if (BGR->Checked==true)
-	{
-		Trade->Enabled=false;
-		Trade->Checked=false;
-		Only_keys->Enabled=false;
-		Only_keys->Checked=false;
-	}
-	else
-	{
-		Trade->Enabled=true;
-		Only_keys->Enabled=true;
-	}
-}
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::TradeClick(TObject *Sender)
-{
-if (Trade->Checked==true)
-	{
-		BGR->Enabled=false;
-		Only_keys->Enabled=false;
-		BGR->Checked=false;
-		Only_keys->Checked=false;
-	}
-	else
-	{
-		Only_keys->Enabled=true;
-		BGR->Enabled=true;
-	}
 }
 //---------------------------------------------------------------------------
 
