@@ -6,214 +6,172 @@
 #include <conio.h>
 #include <stdio.h>
 #include <Clipbrd.hpp>
+#include <FileCtrl.hpp>
 #include "Steam_Keys_DB.h"
+
 #pragma hdrstop
 #pragma package(smart_init)
 #pragma link "SHDocVw_OCX"
 #pragma resource "*.dfm"
+
 TMainForm *MainForm;
 int count_record;
 AnsiString TextSQL, TextDelete, TextSelect, TextUpdate, Key_cache, TextSQLList;
 AnsiString URL, BOT, Path;
 
 __fastcall TMainForm::TMainForm(TComponent* Owner)
-	: TForm(Owner)
+    : TForm(Owner)
 {
-
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
     try
-	{
-		MainForm->Caption="Steam Keys Database";
-		// Defining ConnectionString to SteamDB.mdb database
-		ADOConnection->ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=SteamDB.mdb;Persist Security Info=True";
-		// Starting ADOConnction
-		ADOConnection->Connected="true";
-		// ADOQuerySelect query using ADOConnection connection
-		ADOQuerySelect->Connection=ADOConnection;
-		// Selecting all rows from Keys table
-		TextSQL="SELECT * FROM Keys";
-		ADOQuerySelect->SQL->Clear();
-		ADOQuerySelect->SQL->Add(TextSQL);
-		ADOQuerySelect->Active=true;
-		// Adjusting iterface elements
-		Delete_key->Enabled=false;
-		Add_new_game->Visible=true;
-		Key_buffer->Visible=false;
-		Copy_buffer->Enabled=false;
-		Only_keys->Visible=false;
-		Only_keys->Checked=false;
-		BGR->Visible=false;
-		BGR->Checked=false;
-		Trade->Visible=false;
-		Trade->Checked=false;
-		Multiselection->Left=548;
-		Multiselection->Top=23;
-		Key_link->MaxLength=71;
-		Game_name->MaxLength=60;
-		Source->MaxLength=25;
-		SortBox->ItemIndex=0;
-		Device->ItemIndex = 0;
-		SKDB->Show();
+    {
+        // Set the caption of the main form
+        MainForm->Caption = "Steam Keys Database";
 
-		// Filling up a list of browsers
-		Browser->Items->Clear();
-		Activation_link->Text="Open activation link";
-		TSearchRec Rec;
-		Path = ExtractFileDir(Application->ExeName);
+        // Establish connection to the database
+        ADOConnection->ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Password=\"\";Data Source=SteamDB.mdb;Persist Security Info=True";
+        ADOConnection->Connected = true;
+        ADOQuerySelect->Connection = ADOConnection;
 
-			// Filling up a list of devices
-		switch (Device->ItemIndex)
-		{
-			case 0:
-			Path = Path + "\\PC\\";
-			break;
+        // Execute SQL query to select all rows from the 'Keys' table
+        ADOQuerySelect->SQL->Text = "SELECT * FROM Keys";
+        ADOQuerySelect->Active = true;
 
-			case 1:
-			Path = Path + "\\Notebook\\";
-			break;
+        // Adjust interface elements
+        Delete_key->Enabled = false;
+        Add_new_game->Visible = true;
+        Key_buffer->Visible = false;
+        Copy_buffer->Enabled = false;
+        Only_keys->Visible = false;
+        Only_keys->Checked = false;
+        BGR->Visible = false;
+        BGR->Checked = false;
+        Trade->Visible = false;
+        Trade->Checked = false;
+        Multiselection->Left = 548;
+        Multiselection->Top = 23;
+        Key_link->MaxLength = 71;
+        Game_name->MaxLength = 60;
+        Source->MaxLength = 25;
+        SortBox->ItemIndex = 0;
+        Device->ItemIndex = 0;
+        SKDB->Show();
 
-			default:
-				;
-		}
+        // Filling up a list of browsers
+        Browser->Items->Clear();
+        Activation_link->Text = "Open activation link";
 
-			// Filling up a list of browsers
-		if(FindFirst(Path+"\\*.lnk", faAnyFile , Rec) == 0)
-		{
-			do
-			{
-				Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-				Activation_link->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-			}
-				while(FindNext(Rec) == 0);
-		}
-		FindClose(Rec);
+        AnsiString path = ExtractFilePath(Application->ExeName);
+        switch (Device->ItemIndex)
+        {
+            case 0:
+                path = IncludeTrailingBackslash(path + "PC");
+                break;
+            case 1:
+                path = IncludeTrailingBackslash(path + "Notebook");
+                break;
+            default:
+                break;
+        }
 
-		// Disable some interface items and fill up test fields with messages if database is empty
-		if (ADOQuerySelect->RecordCount==0)
-		{
-			Number_keys->Text="0";
-			Add_date->DateTime.CurrentDateTime();
-			Key_link->Text="Enter a key or Indiegala link";
-			Game_name->Text="Enter a name of the game";
-			Source->Text="Enter source";
-			Notes->Text="You can write down some notes here. Delete this text for now :)";
+        TSearchRec Rec;
+        if (FindFirst(path + "*.lnk", faAnyFile, Rec) == 0)
+        {
+            do
+            {
+                Browser->Items->Add(ChangeFileExt(Rec.Name, ""));
+                Activation_link->Items->Add(ChangeFileExt(Rec.Name, ""));
+            }
+            while (FindNext(Rec) == 0);
+        }
+        FindClose(Rec);
 
-			KeySelect->Visible=false;
-			Game_select->Visible=false;
-			SortingBox->Visible=false;
-			Update_key->Enabled=false;
-			MainForm->Height=245;
-			MainForm->Width=663;
-			GaOpener->TabVisible=false;
-		}
-		// Selecting all keys and filling up lists sorted by date if DB is not empty
-		else
-		{
-			KeySelect->Visible=true;
-			Game_select->Visible=true;
-			SortingBox->Visible=true;
-			Update_key->Enabled=true;
-			MainForm->Height=565;
-			MainForm->Width=1138;
-			GaOpener->TabVisible=true;
+        // Disable interface items and fill test fields if database is empty
+        if (ADOQuerySelect->RecordCount == 0)
+        {
+            Number_keys->Text = "0";
+            Add_date->Date = Date();
+            Key_link->Text = "Enter a key or Indiegala link";
+            Game_name->Text = "Enter a name of the game";
+            Source->Text = "Enter source";
+            Notes->Text = "You can write down some notes here. Delete this text for now :)";
 
-			TextSQL="SELECT * FROM Keys ORDER BY Add_date ASC";
-			ADOQuerySelect->SQL->Clear();
-			ADOQuerySelect->SQL->Add(TextSQL);
-			ADOQuerySelect->Active=true;
-			ADOQuerySelect->FindLast();
-			Add_date->DateTime=ADOQuerySelect->FieldByName("Add_date")->AsString;
-			Key_link->Text=ADOQuerySelect->FieldByName("Key_link")->AsString;
-			Game_name->Text=ADOQuerySelect->FieldByName("Game_name")->AsString;
-			Source->Text=ADOQuerySelect->FieldByName("Source")->AsString;
-			Notes->Text=ADOQuerySelect->FieldByName("Notes")->AsString;
-				if(ADOQuerySelect->FieldByName("Trading_cards")->AsString=="True")
-				{
-					Trading_cards->Checked=true;
-				}
-				else
-				{
-					Trading_cards->Checked=false;
-				}
+            KeySelect->Visible = false;
+            Game_select->Visible = false;
+            SortingBox->Visible = false;
+            Update_key->Enabled = false;
+            MainForm->Height = 245;
+            MainForm->Width = 663;
+            GaOpener->TabVisible = false;
+        }
+        else
+        {
+            // Handle non-empty database
+            KeySelect->Visible = true;
+            Game_select->Visible = true;
+            SortingBox->Visible = true;
+            Update_key->Enabled = true;
+            MainForm->Height = 565;
+            MainForm->Width = 1138;
+            GaOpener->TabVisible = true;
 
-				if(ADOQuerySelect->FieldByName("DLC")->AsString=="True")
-				{
-					DLC->Checked=true;
-				}
-				else
-				{
-					DLC->Checked=false;
-				}
+            ADOQuerySelect->Last();
+            Add_date->Date = ADOQuerySelect->FieldByName("Add_date")->AsDateTime;
+            Key_link->Text = ADOQuerySelect->FieldByName("Key_link")->AsString;
+            Game_name->Text = ADOQuerySelect->FieldByName("Game_name")->AsString;
+            Source->Text = ADOQuerySelect->FieldByName("Source")->AsString;
+            Notes->Text = ADOQuerySelect->FieldByName("Notes")->AsString;
 
-				if(ADOQuerySelect->FieldByName("Other")->AsString=="True")
-				{
-					Other->Checked=true;
-				}
-				else
-				{
-					Other->Checked=false;
-				}
+            Trading_cards->Checked = ADOQuerySelect->FieldByName("Trading_cards")->AsBoolean;
+            DLC->Checked = ADOQuerySelect->FieldByName("DLC")->AsBoolean;
+            Other->Checked = ADOQuerySelect->FieldByName("Other")->AsBoolean;
+            Already_used->Checked = ADOQuerySelect->FieldByName("Already_used")->AsBoolean;
 
-				if(ADOQuerySelect->FieldByName("Already_used")->AsString=="True")
-				{
-					Already_used->Checked=true;
-				}
-				else
-				{
-					Already_used->Checked=false;
-				}
-			// Filling up table with list of keys
-			TextSQL="SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='";
-			TextSQL+=Game_name->Text;
-			TextSQL+="' ORDER BY Add_date ASC";
-			ADOQueryDBGrid->SQL->Clear();
-			ADOQueryDBGrid->SQL->Add(TextSQL);
-			ADOQueryDBGrid->Active=true;
-			Number_keys->Text=ADOQueryDBGrid->RecordCount;
-			// Filling up list of key's sources
-			TextSQL="SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			Source->Items->Clear();
-				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-				{
-					Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
-					ADOQueryListBox->FindNext();
-				}
-			// Filling up games list
-			TextSQL="SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
-			ADOQueryListBox->SQL->Clear();
-			ADOQueryListBox->SQL->Add(TextSQL);
-			ADOQueryListBox->Active=true;
-			GamesListBox->Items->Clear();
-			Game_name->Items->Clear();
-				for (count_record = -1; count_record < ADOQueryListBox->RecordCount-1 ; count_record++)
-				{
-					GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-					Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
-					ADOQueryListBox->FindNext();
-				}
-			// Set selected item in games list corresponding to game name field
-			int index = GamesListBox->Items->IndexOf(Game_name->Text);
-			if (index >= 0)
-			{
-				GamesListBox->ItemIndex = index;
-			}
-		Key_cache=Key_link->Text.Trim();
-		}
-	}
-    catch(...)
-	{
-		ShowMessage(L"Database file SteamDB.mdb is not found!");
-		MainForm->Close();
-	}
+            // Fill up table with list of keys
+            ADOQueryDBGrid->SQL->Text = "SELECT Add_date AS [Date added], Key_link AS [Key or link], Game_name AS [Game], Source FROM Keys WHERE Game_name='" + Game_name->Text + "' ORDER BY Add_date ASC";
+            ADOQueryDBGrid->Active = true;
+            Number_keys->Text = IntToStr(ADOQueryDBGrid->RecordCount);
+
+            // Fill up list of key's sources
+            ADOQueryListBox->SQL->Text = "SELECT Source FROM Keys GROUP BY Source ORDER BY Source";
+            ADOQueryListBox->Active = true;
+            Source->Items->Clear();
+            while (!ADOQueryListBox->Eof)
+            {
+                Source->Items->Add(ADOQueryListBox->FieldByName("Source")->AsString);
+                ADOQueryListBox->Next();
+            }
+
+            // Fill up games list
+            ADOQueryListBox->SQL->Text = "SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Game_name";
+            ADOQueryListBox->Active = true;
+            GamesListBox->Items->Clear();
+            Game_name->Items->Clear();
+            while (!ADOQueryListBox->Eof)
+            {
+                GamesListBox->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+                Game_name->Items->Add(ADOQueryListBox->FieldByName("Game_name")->AsString);
+                ADOQueryListBox->Next();
+            }
+
+            int index = GamesListBox->Items->IndexOf(Game_name->Text);
+            if (index >= 0)
+            {
+                GamesListBox->ItemIndex = index;
+            }
+
+            Key_cache = Key_link->Text.Trim();
+        }
+    }
+    catch(Exception &e)
+    {
+        ShowMessage("Error: " + e.Message);
+        MainForm->Close();
+    }
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::DBGridKeys_listCellClick(TColumn *Column)
 {
