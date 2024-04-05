@@ -754,42 +754,38 @@ void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 {
 	if (Key_buffer->Text.IsEmpty())
 	{
-		Copy_buffer->Caption="Empty";
-		Timer->Enabled=true;
+		Copy_buffer->Caption = "Empty";
 	}
 	else
 	{
-		SortingBox->Color=clLime;
-		Copy_buffer->Caption="DONE";
-		Timer->Enabled=true;
+		SortingBox->Color = clLime;
+		Copy_buffer->Caption = "DONE";
 		Clipboard()->AsText = Key_buffer->Text.Trim();
 	}
+	Timer->Enabled = true;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkKeyPress(TObject *Sender, wchar_t &Key)
 {
-	if(Key==13)
+	if (Key == 13)
 	{
 		Add_Key_ButtonClick(Sender);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Game_nameKeyPress(TObject *Sender, wchar_t &Key)
 {
-	if(Key==13)
+	if (Key == 13)
 	{
 		Add_Key_ButtonClick(Sender);
 	}
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 {
 	if (Key_link->Text.IsEmpty())
 	{
-		Key_link->Text=Clipboard()->AsText;
+		Key_link->Text = Clipboard()->AsText;
 	}
 	else
 	{
@@ -797,7 +793,7 @@ void __fastcall TMainForm::Key_linkClick(TObject *Sender)
 		Key_link->SetFocus();
 	}
 }
-//---------------------------------------------------------------------------
+
 
 void __fastcall TMainForm::SortGroupClick(TObject *Sender)
 {
