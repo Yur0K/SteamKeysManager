@@ -714,38 +714,41 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 
 void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
 {
-	if (Multiselection->Checked==true)
-	{
-		Add_new_game->Visible=false;
+	// Determine the state based on the checkbox
+	bool isChecked = Multiselection->Checked;
+
+    // Toggle visibility based on the checkbox state
+	Add_new_game->Visible = !isChecked;
+    Key_buffer->Visible = isChecked;
+    Only_keys->Visible = isChecked;
+    BGR->Visible = isChecked;
+    Trade->Visible = isChecked;
+
+    // Set properties if checked
+    if (isChecked)
+    {
 		Key_buffer->Lines->Clear();
-		Key_buffer->Visible=true;
 		Key_buffer->Left=0;
 		Key_buffer->Top=1;
 		Key_buffer->Height=182;
 		Key_buffer->Width=645;
-		Only_keys->Visible=true;
-		BGR->Visible=true;
-		Trade->Visible=true;
 		Multiselection->Top=36;
 		Only_keys->Top=13;
 		Only_keys->Left=548;
-	}
-	else
-	{
-		Add_new_game->Visible=true;
-		Key_buffer->Visible=false;
-		Copy_buffer->Enabled=false;
-		Only_keys->Visible=false;
-		Only_keys->Checked=false;
-		BGR->Visible=false;
-		BGR->Checked=false;
-		Trade->Visible=false;
-		Trade->Checked=false;
-		Multiselection->Top=23;
-	}
-	Delete_key->Enabled=false;
+    }
+    else
+    {
+        // Reset specific properties and states when not checked
+        Copy_buffer->Enabled = false;
+        Only_keys->Checked = false;
+        BGR->Checked = false;
+        Trade->Checked = false;
+        Multiselection->Top = 23;
+    }
+
+    // Common setting regardless of the checkbox state
+    Delete_key->Enabled = false;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Copy_bufferClick(TObject *Sender)
 {
