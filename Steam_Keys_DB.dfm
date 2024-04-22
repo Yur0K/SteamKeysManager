@@ -113,11 +113,11 @@ object MainForm: TMainForm
             'Quantity+Name'#8595)
         end
         object Delete_key: TBitBtn
-          Left = 359
+          Left = 362
           Top = 19
-          Width = 97
+          Width = 90
           Height = 28
-          Caption = 'KEY DELETED'
+          Caption = 'Delete key'
           Font.Charset = RUSSIAN_CHARSET
           Font.Color = clRed
           Font.Height = -13
@@ -256,6 +256,7 @@ object MainForm: TMainForm
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
           OnCellClick = DBGridKeys_listCellClick
+          OnMouseWheel = DBGridKeys_listMouseWheel
         end
       end
       object Add_new_game: TGroupBox
@@ -301,7 +302,7 @@ object MainForm: TMainForm
           ParentFont = False
         end
         object Label1: TLabel
-          Left = 200
+          Left = 183
           Top = 16
           Width = 65
           Height = 16
@@ -445,9 +446,9 @@ object MainForm: TMainForm
           OnClick = Add_Key_ButtonClick
         end
         object Add_date: TDateTimePicker
-          Left = 271
+          Left = 254
           Top = 13
-          Width = 140
+          Width = 157
           Height = 24
           Date = 42578.000000000000000000
           Format = 'dd.MM.yyyy HH:mm:ss'
@@ -476,7 +477,7 @@ object MainForm: TMainForm
         object Number_keys: TLabeledEdit
           Left = 109
           Top = 13
-          Width = 85
+          Width = 68
           Height = 24
           Ctl3D = True
           EditLabel.Width = 89
@@ -583,94 +584,43 @@ object MainForm: TMainForm
         OnClick = Add_linkClick
       end
       object Open_link: TButton
-        Left = 1050
-        Top = 35
+        Left = 667
+        Top = 36
         Width = 58
         Height = 46
         Caption = 'Link'
         TabOrder = 2
         OnClick = Open_linkClick
       end
-      object Add_group: TButton
-        Left = 383
-        Top = 3
-        Width = 186
-        Height = 26
-        Caption = 'ADD Group'
-        TabOrder = 3
-        OnClick = Add_groupClick
-      end
-      object Groups_list: TListBox
-        Left = 383
-        Top = 35
-        Width = 377
-        Height = 463
-        AutoComplete = False
-        ItemHeight = 13
-        TabOrder = 4
-      end
-      object Open_groups: TButton
-        Left = 1050
-        Top = 452
-        Width = 58
-        Height = 46
-        Caption = 'Groups'
-        TabOrder = 5
-        OnClick = Open_groupsClick
-      end
       object Open_links: TButton
-        Left = 1050
-        Top = 87
+        Left = 667
+        Top = 93
         Width = 58
         Height = 46
         Caption = 'Links'
-        TabOrder = 6
+        TabOrder = 3
         OnClick = Open_linksClick
       end
-      object Open_group: TButton
-        Left = 1050
-        Top = 400
-        Width = 58
-        Height = 46
-        Caption = 'Group'
-        TabOrder = 7
-        OnClick = Open_groupClick
-      end
       object Browser: TListBox
-        Left = 815
+        Left = 432
         Top = 35
         Width = 229
         Height = 463
         AutoComplete = False
         ItemHeight = 13
-        TabOrder = 8
+        TabOrder = 4
       end
       object Device: TRadioGroup
-        Left = 766
-        Top = 3
+        Left = 383
+        Top = 0
         Width = 43
         Height = 495
         Caption = 'Device'
         Items.Strings = (
           'PC'
           'NB')
-        TabOrder = 9
+        TabOrder = 5
         OnClick = DeviceClick
-      end
-      object Delete_group: TBitBtn
-        Left = 575
-        Top = 3
-        Width = 186
-        Height = 26
-        Caption = 'DELETE Group'
-        Font.Charset = RUSSIAN_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 10
-        OnClick = Delete_groupClick
       end
       object Delete_link: TBitBtn
         Left = 192
@@ -684,34 +634,34 @@ object MainForm: TMainForm
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 11
+        TabOrder = 6
         OnClick = Delete_linkClick
       end
       object Form_StayOnTop: TButton
-        Left = 815
-        Top = 3
+        Left = 432
+        Top = 1
         Width = 58
         Height = 29
         Caption = 'On Top'
-        TabOrder = 12
+        TabOrder = 7
         OnClick = Form_StayOnTopClick
       end
       object Form_Normal: TButton
-        Left = 898
-        Top = 3
+        Left = 515
+        Top = 1
         Width = 58
         Height = 29
         Caption = 'Normal'
-        TabOrder = 13
+        TabOrder = 8
         OnClick = Form_NormalClick
       end
       object Form_hide: TButton
-        Left = 986
-        Top = 3
+        Left = 603
+        Top = 1
         Width = 58
         Height = 29
         Caption = 'Hide'
-        TabOrder = 14
+        TabOrder = 9
         OnClick = Form_hideClick
       end
     end
@@ -719,50 +669,50 @@ object MainForm: TMainForm
   object ADOConnection: TADOConnection
     LoginPrompt = False
     Provider = 'Microsoft.Jet.OLEDB.4.0'
-    Left = 840
-    Top = 432
+    Left = 152
+    Top = 96
   end
   object DataSourceDBGrid: TDataSource
     DataSet = ADOQueryDBGrid
-    Left = 904
-    Top = 480
+    Left = 216
+    Top = 144
   end
   object ADOQueryDBGrid: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 1000
-    Top = 432
+    Left = 312
+    Top = 96
   end
   object ADOQueryListBox: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 904
-    Top = 432
+    Left = 216
+    Top = 96
   end
   object ADOQuerySelect: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 968
-    Top = 432
+    Left = 280
+    Top = 96
   end
   object ADOQueryDelete: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 936
-    Top = 432
+    Left = 248
+    Top = 96
   end
   object Timer: TTimer
     Enabled = False
     Interval = 5000
     OnTimer = TimerTimer
-    Left = 872
-    Top = 480
+    Left = 184
+    Top = 144
   end
   object ADOQueryUpdate: TADOQuery
     Connection = ADOConnection
     Parameters = <>
-    Left = 872
-    Top = 432
+    Left = 184
+    Top = 96
   end
   object TrayIcon: TTrayIcon
     Icon.Data = {
@@ -5553,7 +5503,7 @@ object MainForm: TMainForm
       000000000000000000000000000000000000F80F0000FC0F0000FF9F0000FFFF
       0000FFFF0000}
     OnClick = TrayIconClick
-    Left = 841
-    Top = 480
+    Left = 153
+    Top = 144
   end
 end
