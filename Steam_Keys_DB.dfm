@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1123
     Height = 529
-    ActivePage = GaOpener
+    ActivePage = SKDB
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
@@ -256,6 +256,7 @@ object MainForm: TMainForm
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
           OnCellClick = DBGridKeys_listCellClick
+          OnMouseWheel = DBGridKeys_listMouseWheel
         end
       end
       object Add_new_game: TGroupBox
@@ -301,7 +302,7 @@ object MainForm: TMainForm
           ParentFont = False
         end
         object Label1: TLabel
-          Left = 200
+          Left = 183
           Top = 16
           Width = 65
           Height = 16
@@ -445,9 +446,9 @@ object MainForm: TMainForm
           OnClick = Add_Key_ButtonClick
         end
         object Add_date: TDateTimePicker
-          Left = 271
+          Left = 254
           Top = 13
-          Width = 140
+          Width = 157
           Height = 24
           Date = 42578.000000000000000000
           Format = 'dd.MM.yyyy HH:mm:ss'
@@ -476,7 +477,7 @@ object MainForm: TMainForm
         object Number_keys: TLabeledEdit
           Left = 109
           Top = 13
-          Width = 85
+          Width = 68
           Height = 24
           Ctl3D = True
           EditLabel.Width = 89

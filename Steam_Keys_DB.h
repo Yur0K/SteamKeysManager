@@ -108,6 +108,8 @@ __published:	// IDE-managed Components
 	void __fastcall Only_keysClick(TObject *Sender);
 	void __fastcall BGRClick(TObject *Sender);
 	void __fastcall TradeClick(TObject *Sender);
+	void __fastcall DBGridKeys_listMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta,
+          TPoint &MousePos, bool &Handled);
 
 private:	// User declarations
 public:		// User declarations
