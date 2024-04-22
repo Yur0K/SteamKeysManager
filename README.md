@@ -1,5 +1,5 @@
 # SteamKeysManager
-Software allows you to store and manage your keys and Indiegala links
+Software allows you to store and manage your Steam keys
 
 # Application features:
 * Add, edit or remove Steam keys, Idiegala links
