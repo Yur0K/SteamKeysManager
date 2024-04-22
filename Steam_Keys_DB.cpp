@@ -1,5 +1,5 @@
 // Author: Yuriy Tyutyunnik
-// Date: 05.04.2024
+// Date: 22.04.2024
 
 
 #include <vcl.h>
@@ -954,128 +954,117 @@ void __fastcall TMainForm::Add_linkClick(TObject *Sender)
 	Links_list->Items->Add(Clipboard()->AsText);
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::Open_linkClick(TObject *Sender)
-{
-AnsiString path = ExtractFilePath(Application->ExeName);
-	switch (Device->ItemIndex)
-	{
-		case 0:
-			path += "PC\\";
-			break;
-		case 1:
-			path += "Notebook\\";
-			break;
-		default:
-			break;
-	}
-
-	if (Links_list->ItemIndex!=-1)
-	{
-		URL=Links_list->Items->Strings[Links_list->ItemIndex];
-		BOT = path + Browser->Items->Strings[Browser->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-	}
-
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Open_linksClick(TObject *Sender)
-{
-	AnsiString path = ExtractFilePath(Application->ExeName);
-	switch (Device->ItemIndex)
-	{
-		case 0:
-			path += "PC\\";
-			break;
-		case 1:
-			path += "Notebook\\";
-			break;
-		default:
-			break;
-	}
-
-	if (Links_list->ItemIndex!=-1)
-	{
-		BOT = path + Browser->Items->Strings[Browser->ItemIndex];
-		for (Links_list->ItemIndex = 0; Links_list->ItemIndex < Links_list->Items->Count-1; Links_list->ItemIndex++)
-		{
-			URL=Links_list->Items->Strings[Links_list->ItemIndex];
-			ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-		}
-		URL=Links_list->Items->Strings[Links_list->ItemIndex];
-		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
-	}
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::DeviceClick(TObject *Sender)
-{
-	Browser->Items->Clear();
-	TSearchRec Rec;
-
-	switch (Device->ItemIndex)
-	{
-		case 0:
-		Path = Path + "\\PC\\";
-		break;
-
-		case 1:
-		Path = Path + "\\Notebook\\";
-		break;
-
-		default:
-		;
-	}
-
-	if(FindFirst(Path + "\\*.lnk", faAnyFile , Rec) == 0)
-	{
-		do
-		{
-			Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4 ));
-		}
-		while(FindNext(Rec) == 0);
-	}
-	FindClose(Rec);
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TMainForm::Delete_linkClick(TObject *Sender)
 {
 	Links_list->Items->Delete(Links_list->ItemIndex);
 }
-//---------------------------------------------------------------------------
 
+void __fastcall TMainForm::Open_linkClick(TObject *Sender)
+{
+    if (Links_list->ItemIndex != -1)
+    {
+        AnsiString path = ExtractFilePath(Application->ExeName);
+        switch (Device->ItemIndex)
+        {
+            case 0:
+                path += "PC\\";
+                break;
+            case 1:
+                path += "Notebook\\";
+                break;
+            default:
+                break;
+        }
+
+        AnsiString URL = Links_list->Items->Strings[Links_list->ItemIndex];
+        AnsiString browser = Browser->Items->Strings[Browser->ItemIndex];
+        AnsiString BOT = path + browser;
+
+        ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+    }
+}
+
+void __fastcall TMainForm::Open_linksClick(TObject *Sender)
+{
+    if (Links_list->ItemIndex != -1)
+    {
+        AnsiString path = ExtractFilePath(Application->ExeName);
+        switch (Device->ItemIndex)
+        {
+            case 0:
+                path += "PC\\";
+                break;
+            case 1:
+                path += "Notebook\\";
+                break;
+            default:
+                break;
+        }
+
+        AnsiString browser = Browser->Items->Strings[Browser->ItemIndex];
+        AnsiString BOT = path + browser;
+
+        for (int i = 0; i < Links_list->Items->Count; ++i)
+        {
+            AnsiString URL = Links_list->Items->Strings[i];
+            ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+        }
+    }
+}
+
+void __fastcall TMainForm::DeviceClick(TObject *Sender)
+{
+    Browser->Items->Clear();
+    AnsiString path = ExtractFilePath(Application->ExeName);
+
+    switch (Device->ItemIndex)
+    {
+        case 0:
+            path += "PC\\";
+            break;
+        case 1:
+            path += "Notebook\\";
+            break;
+        default:
+            return; // No action needed for other cases
+    }
+
+    TSearchRec Rec;
+    if (FindFirst(path + "*.lnk", faAnyFile, Rec) == 0)
+    {
+        do
+        {
+            Browser->Items->Add(Rec.Name.SubString(1, Rec.Name.Length() - 4));
+        }
+        while (FindNext(Rec) == 0);
+    }
+    FindClose(Rec);
+}
 
 void __fastcall TMainForm::Form_StayOnTopClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsStayOnTop;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_NormalClick(TObject *Sender)
 {
 	MainForm->FormStyle=fsNormal;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TrayIconClick(TObject *Sender)
 {
 	TrayIcon->Visible=false;
 	ShowWindow(MainForm->Handle, SW_SHOW);
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormHide(TObject *Sender)
 {
 	TrayIcon->Visible=true;
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::Form_hideClick(TObject *Sender)
 {
 	TrayIcon->Visible = true;
 	ShowWindow(MainForm->Handle, SW_HIDE);
 }
-//---------------------------------------------------------------------------
 
