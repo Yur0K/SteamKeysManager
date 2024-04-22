@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1123
     Height = 529
-    ActivePage = SKDB
+    ActivePage = GaOpener
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'

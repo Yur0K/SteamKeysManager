@@ -64,18 +64,18 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         Browser->Items->Clear();
         Activation_link->Text = "Open activation link";
 
-        AnsiString path = ExtractFilePath(Application->ExeName);
-        switch (Device->ItemIndex)
-        {
-            case 0:
-                path = IncludeTrailingBackslash(path + "PC");
-                break;
-            case 1:
-                path = IncludeTrailingBackslash(path + "Notebook");
-                break;
-            default:
-                break;
-        }
+		AnsiString path = ExtractFilePath(Application->ExeName);
+		switch (Device->ItemIndex)
+		{
+			case 0:
+				path = IncludeTrailingBackslash(path + "PC");
+				break;
+			case 1:
+				path = IncludeTrailingBackslash(path + "Notebook");
+				break;
+			default:
+				break;
+		}
 
         TSearchRec Rec;
         if (FindFirst(path + "*.lnk", faAnyFile, Rec) == 0)
@@ -875,33 +875,28 @@ void __fastcall TMainForm::Copy_from_clipboardClick(TObject *Sender)
 	Add_Key_ButtonClick(Sender);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void __fastcall TMainForm::Activation_link_Change(TObject *Sender)
 {
+	AnsiString path = ExtractFilePath(Application->ExeName);
+	switch (Device->ItemIndex)
+	{
+		case 0:
+			path += "PC\\";
+			break;
+		case 1:
+			path += "Notebook\\";
+			break;
+		default:
+			break;
+	}
+
     if (Activation_link->ItemIndex != -1)
     {
-        UnicodeString URL = L"https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
-        UnicodeString BOT = Path + Activation_link->Items->Strings[Activation_link->ItemIndex];
-
-        ShellExecuteW(Handle, L"open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
+        AnsiString URL = "https://store.steampowered.com/account/registerkey?key=" + Key_link->Text.Trim();
+        AnsiString BOT = path + Activation_link->Items->Strings[Activation_link->ItemIndex];
+        ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
     }
 }
-
-
-
 
 void __fastcall TMainForm::Only_keysClick(TObject *Sender)
 {
@@ -919,7 +914,6 @@ void __fastcall TMainForm::Only_keysClick(TObject *Sender)
     }
 
 }
-//---------------------------------------------------------------------------
 
 void __fastcall TMainForm::BGRClick(TObject *Sender)
 {
@@ -936,7 +930,7 @@ if (BGR->Checked==true)
 		Only_keys->Enabled=true;
 	}
 }
-//---------------------------------------------------------------------------
+
 void __fastcall TMainForm::TradeClick(TObject *Sender)
 {
 if (Trade->Checked==true)
@@ -952,33 +946,58 @@ if (Trade->Checked==true)
 		BGR->Enabled=true;
 	}
 }
-//---------------------------------------------------------------------------
+
 //--------------- GA OPENER ------------------------------
 
+void __fastcall TMainForm::Add_linkClick(TObject *Sender)
+{
+	Links_list->Items->Add(Clipboard()->AsText);
+}
 
+//---------------------------------------------------------------------------
 void __fastcall TMainForm::Open_linkClick(TObject *Sender)
 {
+AnsiString path = ExtractFilePath(Application->ExeName);
+	switch (Device->ItemIndex)
+	{
+		case 0:
+			path += "PC\\";
+			break;
+		case 1:
+			path += "Notebook\\";
+			break;
+		default:
+			break;
+	}
+
 	if (Links_list->ItemIndex!=-1)
 	{
 		URL=Links_list->Items->Strings[Links_list->ItemIndex];
-		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
+		BOT = path + Browser->Items->Strings[Browser->ItemIndex];
 		ShellExecute(Handle, "open", BOT.c_str(), URL.c_str(), NULL, SW_SHOW);
 	}
 
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Add_linkClick(TObject *Sender)
-{
-	Links_list->Items->Add(Clipboard()->AsText);
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TMainForm::Open_linksClick(TObject *Sender)
 {
+	AnsiString path = ExtractFilePath(Application->ExeName);
+	switch (Device->ItemIndex)
+	{
+		case 0:
+			path += "PC\\";
+			break;
+		case 1:
+			path += "Notebook\\";
+			break;
+		default:
+			break;
+	}
+
 	if (Links_list->ItemIndex!=-1)
 	{
-		BOT = Path + Browser->Items->Strings[Browser->ItemIndex];
+		BOT = path + Browser->Items->Strings[Browser->ItemIndex];
 		for (Links_list->ItemIndex = 0; Links_list->ItemIndex < Links_list->Items->Count-1; Links_list->ItemIndex++)
 		{
 			URL=Links_list->Items->Strings[Links_list->ItemIndex];
