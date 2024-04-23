@@ -102,9 +102,9 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
             KeySelect->Visible = false;
             Game_select->Visible = false;
             SortingBox->Visible = false;
-            Update_key->Enabled = false;
-            MainForm->Height = 245;
-            MainForm->Width = 663;
+			Update_key->Enabled = false;
+			MainForm->Height = 257;
+			MainForm->Width = 673;
             GaOpener->TabVisible = false;
         }
         else
@@ -113,9 +113,9 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
             KeySelect->Visible = true;
             Game_select->Visible = true;
             SortingBox->Visible = true;
-            Update_key->Enabled = true;
-            MainForm->Height = 565;
-            MainForm->Width = 1138;
+			Update_key->Enabled = true;
+			MainForm->Height = 565;
+			MainForm->Width = 1137;
             GaOpener->TabVisible = true;
 
             ADOQuerySelect->Last();
@@ -353,7 +353,7 @@ void __fastcall TMainForm::GamesListBoxClick(TObject *Sender)
 
 void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 {
-    try
+	try
     {
         TextDelete = "DELETE FROM Keys WHERE Key_link = '";
         TextDelete += DBGridKeys_list->SelectedField->AsString;
@@ -494,9 +494,9 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
             Game_select->Visible = false;
             SortingBox->Visible = false;
             Update_key->Enabled = false;
-            MainForm->Height = 245;
-            MainForm->Width = 663;
-            GaOpener->TabVisible = false;
+			MainForm->Height = 257;
+			MainForm->Width = 673;
+			GaOpener->TabVisible = false;
         }
     }
     catch (...)
@@ -508,7 +508,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
 
 void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
 {
-    // Check if any of the required fields are empty
+	// Check if any of the required fields are empty
     if (Key_link->Text.Trim().IsEmpty() || Game_name->Text.Trim().IsEmpty() || Source->Text.Trim().IsEmpty())
     {
         Add_Key_Button->Caption = "SOME FIELDS ARE EMPTY";
@@ -592,8 +592,8 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
             Game_select->Visible = true;
             SortingBox->Visible = true;
             Update_key->Enabled = true;
-            MainForm->Height = 555;
-            MainForm->Width = 1123;
+			MainForm->Height = 565;
+			MainForm->Width = 1137;
             GaOpener->TabVisible = true;
         }
         catch (...)

@@ -189,9 +189,9 @@ object MainForm: TMainForm
       end
       object Game_select: TGroupBox
         Left = 652
-        Top = 0
+        Top = 3
         Width = 461
-        Height = 248
+        Height = 245
         Caption = 'Game select'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -205,9 +205,9 @@ object MainForm: TMainForm
         TabOrder = 2
         object GamesListBox: TListBox
           Left = 3
-          Top = 14
+          Top = 16
           Width = 453
-          Height = 229
+          Height = 227
           AutoCompleteDelay = 1000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
