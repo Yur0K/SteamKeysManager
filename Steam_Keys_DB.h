@@ -16,7 +16,6 @@
 #include <Buttons.hpp>
 #include <Tabs.hpp>
 #include <Vcl.WinXCalendars.hpp>
-#include "SHDocVw_OCX.h"
 #include <Vcl.OleCtrls.hpp>
 #include <Vcl.Menus.hpp>
 #include <Vcl.Mask.hpp>

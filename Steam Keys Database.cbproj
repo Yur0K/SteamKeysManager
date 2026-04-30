@@ -79,8 +79,8 @@
         <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib</LinkPackageStatics>
         <Multithreaded>true</Multithreaded>
         <ProjectType>CppVCLApplication</ProjectType>
-        <PackageImports>vcl.bpi;rtl.bpi;bcbie.bpi;vclx.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vclimg.bpi;dbrtl.bpi;vcldb.bpi;bdertl.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;Tee.bpi;TeeDB.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DataSnapServer.bpi;DbxClientDriver.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;dbxcds.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;$(PackageImports)</PackageImports>
-        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bcbie.lib;bindengine.lib</AllPackageLibs>
+        <PackageImports>vcl.bpi;rtl.bpi;vclx.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vclimg.bpi;dbrtl.bpi;vcldb.bpi;bdertl.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;Tee.bpi;TeeDB.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DataSnapServer.bpi;DbxClientDriver.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;dbxcds.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;$(PackageImports)</PackageImports>
+        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bindengine.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <IncludePath>$(CG_BOOST_ROOT)\boost\tr1\tr1;$(BDS)\include;$(BDS)\include\vcl;$(CG_BOOST_ROOT);$(IncludePath)</IncludePath>
         <ILINK_LibraryPath>$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;$(ILINK_LibraryPath)</ILINK_LibraryPath>
@@ -152,7 +152,7 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Defines>_DEBUG;$(Defines)</Defines>
-        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bcbie.lib;bindengine.lib</LinkPackageStatics>
+        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bindengine.lib</LinkPackageStatics>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -174,7 +174,7 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
-        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bcbie.lib;bindengine.lib</LinkPackageStatics>
+        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;vcldb.lib;vclwinx.lib;vclimg.lib;bindengine.lib</LinkPackageStatics>
         <DynamicRTL>true</DynamicRTL>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>

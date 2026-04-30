@@ -11,7 +11,6 @@
 
 #pragma hdrstop
 #pragma package(smart_init)
-#pragma link "SHDocVw_OCX"
 #pragma resource "*.dfm"
 
 TMainForm *MainForm;
