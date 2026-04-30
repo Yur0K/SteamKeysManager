@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------
 USEFORM("Steam_Keys_DB.cpp", MainForm);
 //---------------------------------------------------------------------------
-WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
+int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
 	try
 	{

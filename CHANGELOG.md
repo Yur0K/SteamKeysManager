@@ -2,6 +2,10 @@
 
 ## [Unreleased] — Bug fixes (2026-04-30)
 
+### Fixed — Build
+
+- **C++23 implicit-int error** (`Steam Keys Database.cpp` line 9): `WINAPI _tWinMain(...)` was missing the explicit `int` return type. Implicit int was removed in C++23, causing a compile error on the Win64x target with `-std=c++23`. Added `int` before `WINAPI`.
+
 All changes are in `Steam_Keys_DB.cpp`. No `.dfm` or `.h` changes.
 
 ### Fixed — Critical
