@@ -130,6 +130,7 @@
         <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Icon_MainIcon>Steam Keys Database_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -188,6 +189,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64x)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <Icon_MainIcon>Steam Keys Database_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="Steam Keys Database.cpp">

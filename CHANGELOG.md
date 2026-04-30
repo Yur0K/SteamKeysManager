@@ -2,6 +2,10 @@
 
 ## [Unreleased] — Bug fixes (2026-04-30)
 
+### Fixed — Build / Packaging
+
+- **Custom icon not applied on Win64x**: `Base_Win64x` and `Cfg_2_Win64x` property groups in the `.cbproj` were missing `<Icon_MainIcon>` entries, so the Win64x build inherited the default C++Builder icon instead of `Steam Keys Database_Icon.ico`. Added the entry to both groups.
+
 ### Fixed — Runtime
 
 - **"Provider cannot be found" on 64-bit** (`FormShow`): The connection string used `Microsoft.Jet.OLEDB.4.0`, a 32-bit-only provider that does not exist in 64-bit processes. Switched to `Microsoft.ACE.OLEDB.12.0`, the modern 64-bit-compatible replacement. Reads the same `.mdb` format with no database changes required. Requires [Microsoft Access Database Engine](https://www.microsoft.com/en-us/download/details.aspx?id=54920) if Office/Access is not installed.
