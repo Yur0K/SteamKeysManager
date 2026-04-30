@@ -2,6 +2,10 @@
 
 ## [Unreleased] — Bug fixes (2026-04-30)
 
+### Fixed — Runtime
+
+- **"Provider cannot be found" on 64-bit** (`FormShow`): The connection string used `Microsoft.Jet.OLEDB.4.0`, a 32-bit-only provider that does not exist in 64-bit processes. Switched to `Microsoft.ACE.OLEDB.12.0`, the modern 64-bit-compatible replacement. Reads the same `.mdb` format with no database changes required. Requires [Microsoft Access Database Engine](https://www.microsoft.com/en-us/download/details.aspx?id=54920) if Office/Access is not installed.
+
 ### Fixed — Build
 
 - **C++23 implicit-int error** (`Steam Keys Database.cpp` line 9): `WINAPI _tWinMain(...)` was missing the explicit `int` return type. Implicit int was removed in C++23, causing a compile error on the Win64x target with `-std=c++23`. Added `int` before `WINAPI`.

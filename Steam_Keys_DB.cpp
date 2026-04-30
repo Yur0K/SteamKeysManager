@@ -31,7 +31,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         MainForm->Caption = "Steam Keys Database";
 
         // Establish connection to the database
-        ADOConnection->ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Password=\"\";Data Source=SteamDB.mdb;Persist Security Info=True";
+        ADOConnection->ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=SteamDB.mdb;Persist Security Info=False";
         ADOConnection->Connected = true;
         ADOQuerySelect->Connection = ADOConnection;
 

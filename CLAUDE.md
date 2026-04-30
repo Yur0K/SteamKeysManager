@@ -20,6 +20,7 @@ Output goes to `Release\` or `Debug\` respectively. No test suite exists.
 ## Runtime Requirements
 
 - `SteamDB.mdb` (Microsoft Access database) must be present alongside the `.exe` — it is gitignored and not created automatically by the app.
+- [Microsoft Access Database Engine](https://www.microsoft.com/en-us/download/details.aspx?id=54920) must be installed (provides the ACE OLEDB 12.0 provider). Any machine with Microsoft Office/Access already has this.
 - Optional: `PC\*.lnk` and `Notebook\*.lnk` shortcut files in the same directory as the `.exe` for the browser launcher tab.
 
 ## Architecture
@@ -29,7 +30,7 @@ Single-form VCL application. All business logic lives in `Steam_Keys_DB.cpp`; th
 **Database:** One table — `Keys` — with columns: `Add_date`, `Key_link` (used as the de-facto record identifier in queries), `Game_name`, `Source`, `Trading_cards`, `DLC`, `Other`, `Already_used`, `Notes`.
 
 **Data flow:**
-1. `FormShow` connects to `SteamDB.mdb` via Jet OLEDB 4.0 and populates the game list and source combobox.
+1. `FormShow` connects to `SteamDB.mdb` via ACE OLEDB 12.0 and populates the game list and source combobox.
 2. Selecting a game filters the `DBGridKeys_list` grid.
 3. Clicking a grid row loads the record into the edit fields.
 4. CRUD operations use dedicated query components: `ADOQuerySelect` (SELECT + INSERT), `ADOQueryUpdate` (UPDATE), `ADOQueryDelete` (DELETE).
