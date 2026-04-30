@@ -91,7 +91,7 @@
         <SanitizedProjectName>Steam_Keys_Database</SanitizedProjectName>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1049</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
@@ -101,7 +101,7 @@
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>Steam Keys Database_Icon.ico</Icon_MainIcon>
@@ -120,14 +120,14 @@
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64x)'!=''">
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
@@ -178,7 +178,7 @@
         <DynamicRTL>true</DynamicRTL>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Yurii Tiutiunnyk;FileDescription=Steam Keys Manager;FileVersion=1.1.0.0;InternalName=SteamKeysManager;LegalCopyright=Copyright (c) 2018-2026 Yurii Tiutiunnyk;LegalTrademarks=;OriginalFilename=Steam Keys Database.exe;ProductName=Steam Keys Manager;ProductVersion=1.1.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <Icon_MainIcon>Steam Keys Database_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
@@ -227,7 +227,7 @@
                     <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
                     <VersionInfo Name="AutoIncBuild">False</VersionInfo>
                     <VersionInfo Name="MajorVer">1</VersionInfo>
-                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="MinorVer">1</VersionInfo>
                     <VersionInfo Name="Release">0</VersionInfo>
                     <VersionInfo Name="Build">0</VersionInfo>
                     <VersionInfo Name="Debug">False</VersionInfo>
@@ -239,15 +239,15 @@
                     <VersionInfo Name="CodePage">1251</VersionInfo>
                 </VersionInfo>
                 <VersionInfoKeys>
-                    <VersionInfoKeys Name="CompanyName"/>
-                    <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
-                    <VersionInfoKeys Name="InternalName"/>
-                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="CompanyName">Yurii Tiutiunnyk</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription">Steam Keys Manager</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">1.1.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName">SteamKeysManager</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright">Copyright (c) 2018-2026 Yurii Tiutiunnyk</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
-                    <VersionInfoKeys Name="OriginalFilename"/>
-                    <VersionInfoKeys Name="ProductName"/>
-                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="OriginalFilename">Steam Keys Database.exe</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductName">Steam Keys Manager</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">1.1.0.0</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Debugging>

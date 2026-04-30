@@ -32,4 +32,4 @@ Output goes to `Release\` or `Debug\` respectively.
 
 ## License
 
-MIT — Yuriy Tyutyunnik, 2018–2024
+MIT — Yurii Tiutiunnyk, 2018–2026

@@ -1,5 +1,5 @@
-// Author: Yuriy Tyutyunnik
-// Date: 22.04.2024
+// Author: Yurii Tiutiunnyk
+// Date: 22.04.2024 — updated 30.04.2026
 
 
 #include <vcl.h>
