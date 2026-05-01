@@ -59,8 +59,10 @@ void __fastcall TMainForm::ResizeToContent()
 
 // Redistribute grid column widths evenly so all columns fit within the
 // visible grid width and no horizontal scrollbar appears. Called via
-// ADOQueryDBGrid->AfterOpen every time a new query is opened, so it
-// works for both the 4-column main view and the 2-column sort views.
+// Fit grid columns to the visible width on every dataset open.
+// 4-column view (date / key / game / source): date, key and source get
+// fixed pixel widths; game fills whatever remains.
+// Any other column count: equal distribution fallback.
 void __fastcall TMainForm::ADOQueryDBGridAfterOpen(TDataSet* /*DataSet*/)
 {
     int n = ADOQueryDBGrid->FieldCount;
@@ -68,15 +70,29 @@ void __fastcall TMainForm::ADOQueryDBGridAfterOpen(TDataSet* /*DataSet*/)
 
     int charW = DBGridKeys_list->Canvas->TextWidth("0");
     if (charW < 6) charW = 6;
-    // Subtract the row-indicator column (scales with DPI via ScaleBy)
     int indicatorW = MulDiv(24, Screen->PixelsPerInch, 96);
     int available = DBGridKeys_list->ClientWidth - indicatorW;
     if (available <= 0) return;
 
-    int dispW = available / (n * charW);
-    if (dispW < 2) dispW = 2;
-    for (int i = 0; i < n; i++)
-        ADOQueryDBGrid->Fields->Fields[i]->DisplayWidth = dispW;
+    if (n == 4)
+    {
+        int dateW = MulDiv(130, Screen->PixelsPerInch, 96);
+        int keyW  = MulDiv(350, Screen->PixelsPerInch, 96);
+        int srcW  = MulDiv(100, Screen->PixelsPerInch, 96);
+        int gameW = available - dateW - keyW - srcW;
+        if (gameW < charW * 4) gameW = charW * 4;  // minimum 4 chars
+
+        int px[4] = { dateW, keyW, gameW, srcW };
+        for (int i = 0; i < 4; i++)
+            ADOQueryDBGrid->Fields->Fields[i]->DisplayWidth = px[i] / charW;
+    }
+    else
+    {
+        int dispW = available / (n * charW);
+        if (dispW < 2) dispW = 2;
+        for (int i = 0; i < n; i++)
+            ADOQueryDBGrid->Fields->Fields[i]->DisplayWidth = dispW;
+    }
 }
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
