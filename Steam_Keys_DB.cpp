@@ -30,6 +30,29 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
         ScaleBy(sysDPI, 96);
 }
 
+// Resize the form so its client area wraps all currently visible controls on SKDB.
+// Control positions are already in DPI-scaled pixels (ScaleBy ran in the constructor),
+// so iterating them gives a DPI-correct result at any scale factor.
+void __fastcall TMainForm::ResizeToContent()
+{
+    int maxRight = 0, maxBottom = 0;
+    for (int i = 0; i < SKDB->ControlCount; i++)
+    {
+        TControl* ctrl = SKDB->Controls[i];
+        if (ctrl->Visible)
+        {
+            int r = ctrl->Left + ctrl->Width;
+            int b = ctrl->Top + ctrl->Height;
+            if (r > maxRight)  maxRight  = r;
+            if (b > maxBottom) maxBottom = b;
+        }
+    }
+    ClientWidth  = maxRight  + 15;
+    // SKDB->Top equals the PageControl tab-strip height, converting from
+    // SKDB-local Y coordinates to form client coordinates.
+    ClientHeight = SKDB->Top + maxBottom + 15;
+}
+
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
     try
@@ -57,8 +80,8 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         BGR->Checked = false;
         Trade->Visible = false;
         Trade->Checked = false;
-        Multiselection->Left = 548;
-        Multiselection->Top = 23;
+        Multiselection->Left = SortingBox->Width - Multiselection->Width - 4;
+        Multiselection->Top  = MulDiv(23, Screen->PixelsPerInch, 96);
         Key_link->MaxLength = 71;
         Game_name->MaxLength = 60;
         Source->MaxLength = 25;
@@ -109,8 +132,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
             Game_select->Visible = false;
             SortingBox->Visible = false;
 			Update_key->Enabled = false;
-			MainForm->Height = 257;
-			MainForm->Width = 673;
+            ResizeToContent();
             GaOpener->TabVisible = false;
         }
         else
@@ -120,8 +142,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
             Game_select->Visible = true;
             SortingBox->Visible = true;
 			Update_key->Enabled = true;
-			MainForm->Height = 565;
-			MainForm->Width = 1137;
+            ResizeToContent();
             GaOpener->TabVisible = true;
 
             ADOQuerySelect->Last();
@@ -499,9 +520,8 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
             Game_select->Visible = false;
             SortingBox->Visible = false;
             Update_key->Enabled = false;
-			MainForm->Height = 257;
-			MainForm->Width = 673;
-			GaOpener->TabVisible = false;
+            ResizeToContent();
+            GaOpener->TabVisible = false;
         }
     }
     catch (...)
@@ -596,8 +616,7 @@ void __fastcall TMainForm::Add_Key_ButtonClick(TObject *Sender)
             Game_select->Visible = true;
             SortingBox->Visible = true;
             Update_key->Enabled = true;
-			MainForm->Height = 565;
-			MainForm->Width = 1137;
+            ResizeToContent();
             GaOpener->TabVisible = true;
 
             ADOQueryDBGrid->Active = false;
@@ -804,13 +823,11 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
     if (isChecked)
     {
 		Key_buffer->Lines->Clear();
-		Key_buffer->Left=0;
-		Key_buffer->Top=1;
-		Key_buffer->Height=182;
-		Key_buffer->Width=645;
-		Multiselection->Top=36;
-		Only_keys->Top=13;
-		Only_keys->Left=548;
+		Key_buffer->SetBounds(Add_new_game->Left, Add_new_game->Top,
+		                      Add_new_game->Width, Add_new_game->Height);
+		Multiselection->Top = MulDiv(36, Screen->PixelsPerInch, 96);
+		Only_keys->Top      = MulDiv(13, Screen->PixelsPerInch, 96);
+		Only_keys->Left     = SortingBox->Width - Only_keys->Width - 4;
     }
     else
     {
@@ -819,7 +836,7 @@ void __fastcall TMainForm::MultiselectionClick(TObject *Sender)
         Only_keys->Checked = false;
 		BGR->Checked = false;
         Trade->Checked = false;
-        Multiselection->Top = 23;
+        Multiselection->Top = MulDiv(23, Screen->PixelsPerInch, 96);
     }
 
     // Common setting regardless of the checkbox state

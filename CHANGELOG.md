@@ -6,7 +6,11 @@
 
 - **UI cut off at 125% display scaling**: The project was declared `PerMonitor`/`PerMonitorV2` DPI-aware, which hands all scaling responsibility to the app. VCL's `Scaled = True` (default) then upscaled form controls by 1.25× but the window boundaries didn't always grow to match, clipping controls at the right and bottom edges.
 
-  **Fix (final):** `AppDPIAwarenessMode` set to `GdiScaling` in all build configs. `Scaled = False` added to `Steam_Keys_DB.dfm` (must be in the DFM — setting it in `FormShow` is too late as VCL scales during DFM streaming). In `TMainForm::TMainForm`, `ScaleBy(Screen->PixelsPerInch, 96)` scales the form and all controls once to match system DPI. This combination gives correct size at any scale factor and sharp GDI-quality rendering. Requires Windows 10 version 1703 or later.
+  **Fix:** `AppDPIAwarenessMode` set to `GdiScaling` in all build configs. `Scaled = False` added to `Steam_Keys_DB.dfm`. In `TMainForm::TMainForm`, `ScaleBy(Screen->PixelsPerInch, 96)` scales the form and all controls once to match system DPI.
+
+- **Hardcoded pixel dimensions reset window to 96-DPI size after scaling**: Four event handlers (`FormShow`, `Add_Key_ButtonClick`, `Delete_keyClick`) set `MainForm->Height`/`Width` to literal 96-DPI pixel values, undoing the `ScaleBy` applied in the constructor. `MultiselectionClick` similarly repositioned controls with literal 96-DPI coordinates.
+
+  **Fix:** Replaced all four `MainForm->Height`/`Width` pairs with `ResizeToContent()`, which iterates visible controls on the SKDB tab sheet and sets `ClientWidth`/`ClientHeight` from their actual (DPI-scaled) extents. `BorderStyle` changed to `bsSizeable`. `MultiselectionClick` and `FormShow` now position controls relative to their containers (`SortingBox->Width`, `Add_new_game` bounds) and use `MulDiv` for vertical offsets, so layouts are correct at any scale factor.
 
 ### Fixed — Build / Packaging
 

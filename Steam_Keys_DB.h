@@ -111,6 +111,7 @@ __published:	// IDE-managed Components
           TPoint &MousePos, bool &Handled);
 
 private:	// User declarations
+	void __fastcall ResizeToContent();
 public:		// User declarations
 	__fastcall TMainForm(TComponent* Owner);
 };
