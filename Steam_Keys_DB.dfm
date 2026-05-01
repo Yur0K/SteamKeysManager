@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 100
   Top = 100
   BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSizeable
+  BorderStyle = bsSingle
   Caption = 'caption'
   ClientHeight = 528
   ClientWidth = 1128

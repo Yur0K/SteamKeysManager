@@ -28,6 +28,10 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     int sysDPI = Screen->PixelsPerInch;
     if (sysDPI != 96)
         ScaleBy(sysDPI, 96);
+
+    // Auto-fit grid columns each time the grid dataset opens so columns
+    // fill the visible width without a horizontal scrollbar.
+    ADOQueryDBGrid->AfterOpen = ADOQueryDBGridAfterOpen;
 }
 
 // Resize the form so its client area wraps all currently visible controls on SKDB.
@@ -51,6 +55,26 @@ void __fastcall TMainForm::ResizeToContent()
     // SKDB->Top equals the PageControl tab-strip height, converting from
     // SKDB-local Y coordinates to form client coordinates.
     ClientHeight = SKDB->Top + maxBottom + 15;
+}
+
+// Redistribute grid column widths evenly so all columns fit within the
+// visible grid width and no horizontal scrollbar appears. Called via
+// ADOQueryDBGrid->AfterOpen every time a new query is opened, so it
+// works for both the 4-column main view and the 2-column sort views.
+void __fastcall TMainForm::ADOQueryDBGridAfterOpen(TDataSet* /*DataSet*/)
+{
+    int n = ADOQueryDBGrid->FieldCount;
+    if (n == 0) return;
+
+    int charW = max(6, DBGridKeys_list->Canvas->TextWidth("0"));
+    // Subtract the row-indicator column (scales with DPI via ScaleBy)
+    int indicatorW = MulDiv(24, Screen->PixelsPerInch, 96);
+    int available = DBGridKeys_list->ClientWidth - indicatorW;
+    if (available <= 0) return;
+
+    int dispW = max(2, available / (n * charW));
+    for (int i = 0; i < n; i++)
+        ADOQueryDBGrid->Fields->Fields[i]->DisplayWidth = dispW;
 }
 
 void __fastcall TMainForm::FormShow(TObject *Sender)

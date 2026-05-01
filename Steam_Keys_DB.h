@@ -112,6 +112,7 @@ __published:	// IDE-managed Components
 
 private:	// User declarations
 	void __fastcall ResizeToContent();
+	void __fastcall ADOQueryDBGridAfterOpen(TDataSet* DataSet);
 public:		// User declarations
 	__fastcall TMainForm(TComponent* Owner);
 };
