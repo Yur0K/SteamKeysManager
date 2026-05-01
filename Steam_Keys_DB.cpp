@@ -66,13 +66,15 @@ void __fastcall TMainForm::ADOQueryDBGridAfterOpen(TDataSet* /*DataSet*/)
     int n = ADOQueryDBGrid->FieldCount;
     if (n == 0) return;
 
-    int charW = max(6, DBGridKeys_list->Canvas->TextWidth("0"));
+    int charW = DBGridKeys_list->Canvas->TextWidth("0");
+    if (charW < 6) charW = 6;
     // Subtract the row-indicator column (scales with DPI via ScaleBy)
     int indicatorW = MulDiv(24, Screen->PixelsPerInch, 96);
     int available = DBGridKeys_list->ClientWidth - indicatorW;
     if (available <= 0) return;
 
-    int dispW = max(2, available / (n * charW));
+    int dispW = available / (n * charW);
+    if (dispW < 2) dispW = 2;
     for (int i = 0; i < n; i++)
         ADOQueryDBGrid->Fields->Fields[i]->DisplayWidth = dispW;
 }
