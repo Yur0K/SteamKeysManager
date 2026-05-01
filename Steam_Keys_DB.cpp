@@ -1,4 +1,4 @@
-// Author: Yurii Tiutiunnyk
+﻿// Author: Yurii Tiutiunnyk
 // Date: 22.04.2024 — updated 30.04.2026
 
 

@@ -26,6 +26,9 @@ object MainForm: TMainForm
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
+      DesignSize = (
+        1115
+        501)
       object SortingBox: TGroupBox
         Left = 0
         Top = 188
@@ -204,12 +207,16 @@ object MainForm: TMainForm
         ParentColor = False
         ParentFont = False
         TabOrder = 2
+        DesignSize = (
+          461
+          245)
         object GamesListBox: TListBox
           Left = 3
           Top = 16
           Width = 453
           Height = 227
           AutoCompleteDelay = 1000
+          Anchors = [akLeft, akTop, akRight, akBottom]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -226,6 +233,7 @@ object MainForm: TMainForm
         Top = 249
         Width = 1113
         Height = 249
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Key select'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -237,11 +245,15 @@ object MainForm: TMainForm
         ParentColor = False
         ParentFont = False
         TabOrder = 3
+        DesignSize = (
+          1113
+          249)
         object DBGridKeys_list: TDBGrid
           Left = 5
           Top = 14
           Width = 1105
           Height = 232
+          Anchors = [akLeft, akTop, akRight, akBottom]
           DataSource = DataSourceDBGrid
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -451,9 +463,9 @@ object MainForm: TMainForm
           Top = 13
           Width = 157
           Height = 24
-          Date = 42578.000000000000000000
+          Date = 42578.00000000000000000
           Format = 'dd.MM.yyyy HH:mm:ss'
-          Time = 0.708157638888224000
+          Time = 0.70815763888822400
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
