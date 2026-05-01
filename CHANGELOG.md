@@ -2,6 +2,12 @@
 
 ## [Unreleased] — Bug fixes (2026-04-30)
 
+### Fixed — DPI / Scaling
+
+- **UI cut off at 125% display scaling**: The project was declared `PerMonitor`/`PerMonitorV2` DPI-aware, which hands all scaling responsibility to the app. VCL's `Scaled = True` (default) then upscaled form controls by 1.25× but the window boundaries didn't always grow to match, clipping controls at the right and bottom edges.
+
+  **Fix:** Changed `AppDPIAwarenessMode` to `GdiScaling` in all build configurations and added `Scaled = false` in `FormShow`. With GDI Scaling, Windows handles all rendering at the correct size using ClearType-quality GDI scaling — text stays sharp (unlike pure bitmap/System scaling) and layout is always correct. Requires Windows 10 version 1703 or later.
+
 ### Fixed — Build / Packaging
 
 - **Custom icon not applied on Win64x**: `Base_Win64x` and `Cfg_2_Win64x` property groups in the `.cbproj` were missing `<Icon_MainIcon>` entries, so the Win64x build inherited the default C++Builder icon instead of `Steam Keys Database_Icon.ico`. Added the entry to both groups.
