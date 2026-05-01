@@ -13,6 +13,7 @@ object MainForm: TMainForm
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poDesigned
+  Scaled = False
   OnHide = FormHide
   OnShow = FormShow
   TextHeight = 13

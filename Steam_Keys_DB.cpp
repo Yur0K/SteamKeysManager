@@ -25,11 +25,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
 {
-    // Disable VCL's built-in form scaling — DPI rendering is handled by
-    // GDI Scaling (set in the manifest), which gives sharp text without
-    // the layout overflow that PerMonitor + Scaled=True causes at 125%.
-    Scaled = false;
-
     try
     {
         // Set the caption of the main form
