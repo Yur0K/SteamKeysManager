@@ -16,14 +16,17 @@ object MainForm: TMainForm
   Scaled = False
   OnHide = FormHide
   OnShow = FormShow
+  DesignSize = (
+    1128
+    528)
   TextHeight = 13
   object PageControl1: TPageControl
     Left = 0
     Top = 0
     Width = 1123
     Height = 529
-    Anchors = [akLeft, akTop, akRight, akBottom]
     ActivePage = SKDB
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object SKDB: TTabSheet
       Caption = 'SKDB'
@@ -316,7 +319,7 @@ object MainForm: TMainForm
           ParentFont = False
         end
         object Label1: TLabel
-          Left = 183
+          Left = 181
           Top = 16
           Width = 65
           Height = 16
@@ -460,9 +463,9 @@ object MainForm: TMainForm
           OnClick = Add_Key_ButtonClick
         end
         object Add_date: TDateTimePicker
-          Left = 254
+          Left = 251
           Top = 13
-          Width = 157
+          Width = 161
           Height = 24
           Date = 42578.00000000000000000
           Format = 'dd.MM.yyyy HH:mm:ss'
