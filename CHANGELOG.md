@@ -6,7 +6,7 @@
 
 - **UI cut off at 125% display scaling**: The project was declared `PerMonitor`/`PerMonitorV2` DPI-aware, which hands all scaling responsibility to the app. VCL's `Scaled = True` (default) then upscaled form controls by 1.25× but the window boundaries didn't always grow to match, clipping controls at the right and bottom edges.
 
-  **Fix:** Changed `AppDPIAwarenessMode` to `GdiScaling` in all build configurations and set `Scaled = False` directly in `Steam_Keys_DB.dfm`. The `.dfm` property must be set at the source level — setting `Scaled` in `FormShow` is too late because VCL applies form scaling during DFM streaming, before any event fires. With GDI Scaling, Windows handles all rendering at the correct size using ClearType-quality GDI scaling — text stays sharp (unlike pure bitmap/System scaling) and layout is always correct. Requires Windows 10 version 1703 or later.
+  **Fix (final):** `AppDPIAwarenessMode` set to `GdiScaling` in all build configs. `Scaled = False` added to `Steam_Keys_DB.dfm` (must be in the DFM — setting it in `FormShow` is too late as VCL scales during DFM streaming). In `TMainForm::TMainForm`, `ScaleBy(Screen->PixelsPerInch, 96)` scales the form and all controls once to match system DPI. This combination gives correct size at any scale factor and sharp GDI-quality rendering. Requires Windows 10 version 1703 or later.
 
 ### Fixed — Build / Packaging
 

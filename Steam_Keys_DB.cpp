@@ -21,6 +21,13 @@ AnsiString URL, BOT, Path;
 __fastcall TMainForm::TMainForm(TComponent* Owner)
     : TForm(Owner)
 {
+    // Scale form and all controls to match system DPI.
+    // Scaled=False in the DFM prevents VCL's automatic scaling pass
+    // (which caused controls to overflow at 125%). We do one explicit
+    // scale here instead, using the actual screen DPI.
+    int sysDPI = Screen->PixelsPerInch;
+    if (sysDPI != 96)
+        ScaleBy(sysDPI, 96);
 }
 
 void __fastcall TMainForm::FormShow(TObject *Sender)
