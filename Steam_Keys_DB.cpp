@@ -92,7 +92,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         ADOQuerySelect->Connection = ADOConnection;
 
         // Execute SQL query to select all rows from the 'Keys' table
-        ADOQuerySelect->SQL->Text = "SELECT * FROM Keys";
+        ADOQuerySelect->SQL->Text = "SELECT * FROM Keys ORDER BY Add_date ASC";
         ADOQuerySelect->Active = true;
 
         // Adjust interface elements
@@ -769,7 +769,7 @@ void __fastcall TMainForm::SortBoxChange(TObject *Sender)
 
         case 1:
             TextSQL = "SELECT Add_date AS [Date added], Key_link AS [Key], Game_name AS [Game name], Source FROM Keys ORDER BY Add_date DESC, Game_name DESC";
-            TextSQLList = "SELECT Game_name FROM Keys GROUP BY Game_name, Add_date ORDER BY Add_date DESC";
+            TextSQLList = "SELECT Game_name FROM Keys GROUP BY Game_name ORDER BY Max(Add_date) DESC";
             break;
 
         case 2:
