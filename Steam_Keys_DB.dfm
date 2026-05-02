@@ -28,6 +28,8 @@ object MainForm: TMainForm
     ActivePage = SKDB
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitWidth = 1121
+    ExplicitHeight = 521
     object SKDB: TTabSheet
       Caption = 'SKDB'
       DesignSize = (
@@ -249,6 +251,7 @@ object MainForm: TMainForm
         ParentColor = False
         ParentFont = False
         TabOrder = 3
+        ExplicitWidth = 1111
         DesignSize = (
           1113
           249)

@@ -76,8 +76,8 @@ void __fastcall TMainForm::ADOQueryDBGridAfterOpen(TDataSet* /*DataSet*/)
 
     if (n == 4)
     {
-        int dateW = MulDiv(130, Screen->PixelsPerInch, 96);
-        int keyW  = MulDiv(350, Screen->PixelsPerInch, 96);
+		int dateW = MulDiv(110, Screen->PixelsPerInch, 96);
+		int keyW  = MulDiv(350, Screen->PixelsPerInch, 96);
         int srcW  = MulDiv(100, Screen->PixelsPerInch, 96);
         int gameW = available - dateW - keyW - srcW;
         if (gameW < charW * 4) gameW = charW * 4;  // minimum 4 chars
@@ -123,7 +123,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         Trade->Visible = false;
         Trade->Checked = false;
         Multiselection->Left = SortingBox->Width - Multiselection->Width - 4;
-        Multiselection->Top  = MulDiv(23, Screen->PixelsPerInch, 96);
+		Multiselection->Top  = MulDiv(23, Screen->PixelsPerInch, 96);
         Key_link->MaxLength = 71;
         Game_name->MaxLength = 60;
         Source->MaxLength = 25;
@@ -165,7 +165,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         {
             Number_keys->Text = "0";
             Add_date->Date = Date();
-            Key_link->Text = "Enter a key or Indiegala link";
+            Key_link->Text = "Enter Steam key";
             Game_name->Text = "Enter a name of the game";
             Source->Text = "Enter source";
             Notes->Text = "You can write down some notes here. Delete this text for now :)";
@@ -553,7 +553,7 @@ void __fastcall TMainForm::Delete_keyClick(TObject *Sender)
         {
             Number_keys->Text = "0";
             Add_date->DateTime = TDateTime::CurrentDateTime();
-            Key_link->Text = "Enter a key or Indiegala link";
+            Key_link->Text = "Enter Steam key";
             Game_name->Text = "Enter a name of the game";
             Source->Text = "Enter source";
             Notes->Text = "You can write down some notes here. Delete this text for now :)";
