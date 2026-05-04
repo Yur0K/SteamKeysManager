@@ -17,7 +17,6 @@
 *.lnk
 *.ldb
 /__recovery
-Release/Steam Keys Database.res
-Debug/Steam Keys Database.res
+*.res
 /Debug
 /Release
